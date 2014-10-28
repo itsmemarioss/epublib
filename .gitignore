@@ -7,3 +7,9 @@ epublib-tools/.classpath
 epublib-tools/.project
 epublib-core/.settings
 epublib-tools/.settings/
+epublib-core/.idea
+epublib-core/foo.zip
+epublib-core/.DS_Store
+epublib-core/epublib-core.iml
+.DS_Store
+

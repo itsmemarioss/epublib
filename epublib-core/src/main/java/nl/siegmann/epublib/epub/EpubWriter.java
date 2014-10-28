@@ -48,6 +48,7 @@ public class EpubWriter {
 		ZipOutputStream resultStream = new ZipOutputStream(out);
 		writeMimeType(resultStream);
 		writeContainer(resultStream);
+        writeiBooksDisplayOption(resultStream);
 		initTOCResource(book);
 		writeResources(book, resultStream);
 		writePackageDocument(book, resultStream);
@@ -132,6 +133,18 @@ public class EpubWriter {
 		out.write("</container>");
 		out.flush();
 	}
+
+    private void writeiBooksDisplayOption(ZipOutputStream resultStream) throws IOException {
+        resultStream.putNextEntry(new ZipEntry("META-INF/com.apple.ibooks.display-options.xml"));
+        Writer out = new OutputStreamWriter(resultStream);
+        out.write("<?xml version=\"1.0\"?>\n");
+        out.write("<display_options>\n");
+        out.write("\t<platform name=\"*\">\n");
+        out.write("\t\t<option name=\"specified-fonts\">true</option>\n");
+        out.write("\t</platform name=\"*\">\n");
+        out.write("</display_options>");
+        out.flush();
+    }
 
 	/**
 	 * Stores the mimetype as an uncompressed file in the ZipOutputStream.

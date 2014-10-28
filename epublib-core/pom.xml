@@ -7,6 +7,7 @@
 
 	<groupId>nl.siegmann.epublib</groupId>
 	<artifactId>epublib-core</artifactId>
+    <version>3.1.1</version>
 	<name>epublib-core</name>
 	<description>A java library for reading/writing/manipulating epub files</description>
 	<url>http://www.siegmann.nl/epublib</url>
@@ -78,15 +79,15 @@
 			</plugin>
 		</plugins>
 	</build>
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.0-beta-3</version>
-			</plugin>
-		</plugins>
-	</reporting>
+	<!--<reporting>-->
+		<!--<plugins>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-site-plugin</artifactId>-->
+				<!--<version>3.3</version>-->
+			<!--</plugin>-->
+		<!--</plugins>-->
+	<!--</reporting>-->
 	<repositories>
 		<repository>
 			<id>maven</id>

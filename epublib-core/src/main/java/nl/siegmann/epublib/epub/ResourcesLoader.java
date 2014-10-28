@@ -147,7 +147,7 @@ public class ResourcesLoader {
 	 * Loads the contents of all ZipEntries into memory.
 	 * Is fast, but may lead to memory problems when reading large books on devices with small amounts of memory.
 	 * 
-	 * @param in
+	 * @param zipFile
 	 * @param defaultHtmlEncoding
 	 * @return
 	 * @throws IOException
