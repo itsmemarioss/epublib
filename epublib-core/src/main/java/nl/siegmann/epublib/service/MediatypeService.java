@@ -1,10 +1,10 @@
 package nl.siegmann.epublib.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import nl.siegmann.epublib.domain.MediaType;
 import nl.siegmann.epublib.util.StringUtil;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -30,7 +30,7 @@ public class MediatypeService {
 	public static final MediaType SVG = new MediaType("image/svg+xml", ".svg");
 
 	// fonts
-	public static final MediaType TTF = new MediaType("application/x-truetype-font", ".ttf");
+	public static final MediaType TTF = new MediaType("application/x-font-ttf", ".ttf");
 	public static final MediaType OPENTYPE = new MediaType("application/vnd.ms-opentype", ".otf");
 	public static final MediaType WOFF = new MediaType("application/font-woff", ".woff");
 	

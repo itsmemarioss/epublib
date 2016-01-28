@@ -1,16 +1,12 @@
 package nl.siegmann.epublib.domain;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.Serializable;
-
 import nl.siegmann.epublib.Constants;
 import nl.siegmann.epublib.service.MediatypeService;
 import nl.siegmann.epublib.util.IOUtil;
 import nl.siegmann.epublib.util.StringUtil;
 import nl.siegmann.epublib.util.commons.io.XmlStreamReader;
+
+import java.io.*;
 
 /**
  * Represents a resource that is part of the epub.
