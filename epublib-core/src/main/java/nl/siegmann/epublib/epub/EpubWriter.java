@@ -1,22 +1,17 @@
 package nl.siegmann.epublib.epub;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.util.zip.CRC32;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.service.MediatypeService;
 import nl.siegmann.epublib.util.IOUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlSerializer;
+
+import java.io.*;
+import java.util.zip.CRC32;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 /**
  * Generates an epub file. Not thread-safe, single use object.
@@ -42,13 +37,34 @@ public class EpubWriter {
 		this.bookProcessor = bookProcessor;
 	}
 
+	/**
+	 *
+	 * @param book
+	 * @param bookStore ibooks,googleplay
+	 * @param out
+	 * @throws IOException
+	 */
+	public void write(Book book, String bookStore, OutputStream out) throws IOException {
+		book = processBook(book);
+		ZipOutputStream resultStream = new ZipOutputStream(out);
+		writeMimeType(resultStream);
+		writeContainer(resultStream);
+
+		if(bookStore.equals("ibooks")) {
+			writeiBooksDisplayOption(resultStream);
+		}
+
+		initTOCResource(book);
+		writeResources(book, resultStream);
+		writePackageDocument(book, resultStream);
+		resultStream.close();
+	}
 
 	public void write(Book book, OutputStream out) throws IOException {
 		book = processBook(book);
 		ZipOutputStream resultStream = new ZipOutputStream(out);
 		writeMimeType(resultStream);
 		writeContainer(resultStream);
-        writeiBooksDisplayOption(resultStream);
 		initTOCResource(book);
 		writeResources(book, resultStream);
 		writePackageDocument(book, resultStream);
