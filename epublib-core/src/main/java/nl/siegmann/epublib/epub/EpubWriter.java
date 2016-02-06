@@ -50,7 +50,7 @@ public class EpubWriter {
 		writeMimeType(resultStream);
 		writeContainer(resultStream);
 
-		if(bookStore.equals("ibooks")) {
+		if(bookStore.equalsIgnoreCase("ibooks")) {
 			writeiBooksDisplayOption(resultStream);
 		}
 
@@ -141,7 +141,7 @@ public class EpubWriter {
 	private void writeContainer(ZipOutputStream resultStream) throws IOException {
 		resultStream.putNextEntry(new ZipEntry("META-INF/container.xml"));
 		Writer out = new OutputStreamWriter(resultStream);
-		out.write("<?xml version=\"1.0\"?>\n");
+		out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
 		out.write("<container version=\"1.0\" xmlns=\"urn:oasis:names:tc:opendocument:xmlns:container\">\n");
 		out.write("\t<rootfiles>\n");
 		out.write("\t\t<rootfile full-path=\"OEBPS/content.opf\" media-type=\"application/oebps-package+xml\"/>\n");
@@ -153,11 +153,11 @@ public class EpubWriter {
     private void writeiBooksDisplayOption(ZipOutputStream resultStream) throws IOException {
         resultStream.putNextEntry(new ZipEntry("META-INF/com.apple.ibooks.display-options.xml"));
         Writer out = new OutputStreamWriter(resultStream);
-        out.write("<?xml version=\"1.0\"?>\n");
+        out.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
         out.write("<display_options>\n");
         out.write("\t<platform name=\"*\">\n");
         out.write("\t\t<option name=\"specified-fonts\">true</option>\n");
-        out.write("\t</platform name=\"*\">\n");
+        out.write("\t</platform>\n");
         out.write("</display_options>");
         out.flush();
     }
