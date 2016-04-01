@@ -1,0 +1,2 @@
+mvn package -Dmaven.test.skip=true -Dmaven.javadoc.skip=true
+
