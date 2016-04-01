@@ -100,6 +100,10 @@ public class Resource implements Serializable {
 	public Resource(InputStream in, String href) throws IOException {
 		this(null, IOUtil.toByteArray(in), href, MediatypeService.determineMediaType(href));
 	}
+
+	public Resource(String id, InputStream in, String href) throws IOException {
+		this(id, IOUtil.toByteArray(in), href, MediatypeService.determineMediaType(href));
+	}
 	
 	/**
 	 * Creates a resource with the given id, data, mediatype at the specified href.
