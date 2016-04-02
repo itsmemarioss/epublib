@@ -10,7 +10,7 @@ import nl.siegmann.epublib.util.StringUtil;
  * @author paul
  *
  */
-public class Author implements Serializable {
+public class Author extends DcmesElement {
 	
 	private static final long serialVersionUID = 6663408501416574200L;
 	
@@ -26,6 +26,11 @@ public class Author implements Serializable {
 	public Author(String firstname, String lastname) {
 		this.firstname = firstname;
 		this.lastname = lastname;
+
+		if (StringUtil.isBlank(firstname))
+			setValue(lastname);
+		else
+			setValue(firstname + " " + lastname);
 	}
 	
 	public String getFirstname() {

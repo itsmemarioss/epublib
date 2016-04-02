@@ -14,7 +14,7 @@ import nl.siegmann.epublib.util.StringUtil;
  * @author paul
  *
  */
-public class Identifier implements Serializable {
+public class Identifier extends DcmesElement {
 	
 	/**
 	 * 

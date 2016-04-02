@@ -290,21 +290,27 @@ import java.util.Map;
 </svg>
 
 
- * @author paul
+ * @author paul,k16wire
  *
  */
 public class Book implements Serializable {
 	
 	private static final long serialVersionUID = 2068355170895770100L;
 
+	private Version version = Version.V2;
 	private Resources resources = new Resources();
 	private Metadata metadata = new Metadata();
 	private Spine spine = new Spine();
 	private TableOfContents tableOfContents = new TableOfContents();
 	private Guide guide = new Guide();
+	private Bindings bindings = new Bindings();
+	private Manifest manifest = new Manifest();
 	private Resource opfResource;
 	private Resource ncxResource;
+	private Resource navResource;
 	private Resource coverImage;
+	private String uniqueId = "";
+	private String zipPath;
 	
 	/**
 	 * Adds the resource to the table of contents of the book as a child section of the given parentSection
@@ -320,6 +326,7 @@ public class Book implements Serializable {
 		if (spine.findFirstResourceById(resource.getId()) < 0)  {
 			spine.addSpineReference(new SpineReference(resource));
 		}
+		addManifestItem(resource, null);
 		return parentSection.addChildSection(new TOCReference(sectionTitle, resource));
 	}
 
@@ -345,6 +352,7 @@ public class Book implements Serializable {
 		if (spine.findFirstResourceById(resource.getId()) < 0)  {
 			spine.addSpineReference(new SpineReference(resource));
 		}
+		addManifestItem(resource, null);
 		return tocReference;
 	}
 	
@@ -360,7 +368,14 @@ public class Book implements Serializable {
 	public void setMetadata(Metadata metadata) {
 		this.metadata = metadata;
 	}
-	
+
+	public Version getVersion() {
+		return version;
+	}
+
+	public void setVersion(Version version) {
+		this.version = version;
+	}
 
 	public void setResources(Resources resources) {
 		this.resources = resources;
@@ -368,7 +383,9 @@ public class Book implements Serializable {
 
 
 	public Resource addResource(Resource resource) {
-		return resources.add(resource);
+		final Resource result = resources.add(resource);
+		addManifestItem(result, null);
+		return result;
 	}
 	
 	/**
@@ -432,6 +449,7 @@ public class Book implements Serializable {
 		if (! resources.containsByHref(coverPage.getHref())) {
 			resources.add(coverPage);
 		}
+		addManifestItem(coverPage, null);
 		guide.setCoverPage(coverPage);
 	}
 	
@@ -440,7 +458,7 @@ public class Book implements Serializable {
 	 * 
 	 * @return the first non-blank title from the book's metadata.
 	 */
-	public String getTitle() {
+	public DcmesElement getTitle() {
 		return getMetadata().getFirstTitle();
 	}
 	
@@ -461,6 +479,7 @@ public class Book implements Serializable {
 		if (! resources.containsByHref(coverImage.getHref())) {
 			resources.add(coverImage);
 		}
+		addManifestItem(coverImage, ManifestItemProperties.COVER_IMAGE);
 		this.coverImage = coverImage;
 	}
 	
@@ -471,6 +490,12 @@ public class Book implements Serializable {
 	 */
 	public Guide getGuide() {
 		return guide;
+	}
+
+	public void addManifestItem(Resource resource, ManifestItemProperties properties) {
+		if (manifest.getManifestItemByHref(resource.getHref()) == null) {
+			manifest.addReference(new ManifestItemReference(resource, properties));
+		}
 	}
 
 	/**
@@ -511,6 +536,14 @@ public class Book implements Serializable {
 		}
 	}
 
+	public Manifest getManifest() {
+		return manifest;
+	}
+
+	public void setManifest(Manifest manifest) {
+		this.manifest = manifest;
+	}
+
 	public Resource getOpfResource() {
 		return opfResource;
 	}
@@ -525,6 +558,38 @@ public class Book implements Serializable {
 
 	public Resource getNcxResource() {
 		return ncxResource;
+	}
+
+	public Resource getNavResource() {
+		return navResource;
+	}
+
+	public void setNavResource(Resource navResource) {
+		this.navResource = navResource;
+	}
+
+	public Bindings getBindings() {
+		return bindings;
+	}
+
+	public void setBindings(Bindings bindings) {
+		this.bindings = bindings;
+	}
+
+	public String getUniqueId() {
+		return uniqueId;
+	}
+
+	public void setUniqueId(String uniqueId) {
+		this.uniqueId = uniqueId;
+	}
+
+	public String getZipPath() {
+		return zipPath;
+	}
+
+	public void setZipPath(String zipPath) {
+		this.zipPath = zipPath;
 	}
 }
 

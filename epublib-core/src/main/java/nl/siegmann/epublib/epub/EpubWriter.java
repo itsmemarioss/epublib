@@ -1,9 +1,12 @@
 package nl.siegmann.epublib.epub;
 
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.domain.*;
+import nl.siegmann.epublib.epub.impl.Epub2PackageDocumentWriter;
+import nl.siegmann.epublib.epub.impl.Epub3PackageDocumentWriter;
 import nl.siegmann.epublib.service.MediatypeService;
 import nl.siegmann.epublib.util.IOUtil;
+import nl.siegmann.epublib.util.StringUtil;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xmlpull.v1.XmlSerializer;
@@ -32,43 +35,34 @@ public class EpubWriter {
 		this(BookProcessor.IDENTITY_BOOKPROCESSOR);
 	}
 	
-	
 	public EpubWriter(BookProcessor bookProcessor) {
 		this.bookProcessor = bookProcessor;
 	}
 
-	/**
-	 *
-	 * @param book
-	 * @param bookStore ibooks,googleplay
-	 * @param out
-	 * @throws IOException
-	 */
-	public void write(Book book, String bookStore, OutputStream out) throws IOException {
-		book = processBook(book);
-		ZipOutputStream resultStream = new ZipOutputStream(out);
-		writeMimeType(resultStream);
-		writeContainer(resultStream);
-
-		if(bookStore.equalsIgnoreCase("ibooks")) {
-			writeiBooksDisplayOption(resultStream);
-		}
-
-		initTOCResource(book);
-		writeResources(book, resultStream);
-		writePackageDocument(book, resultStream);
-		resultStream.close();
+	public void write(Book book, OutputStream out) throws IOException {
+		write(book, out, Version.V2);
 	}
 
-	public void write(Book book, OutputStream out) throws IOException {
+	public void writeEpub3(Book book, OutputStream out) throws IOException{
+		write(book, out, Version.V3);
+	}
+
+	public void write(Book book, OutputStream out, Version version) throws IOException{
 		book = processBook(book);
 		ZipOutputStream resultStream = new ZipOutputStream(out);
 		writeMimeType(resultStream);
 		writeContainer(resultStream);
+		writeiBooksDisplayOption(resultStream);
 		initTOCResource(book);
+		if (version == Version.V3) {
+			initNavResource(book);
+		}
 		writeResources(book, resultStream);
-		writePackageDocument(book, resultStream);
+		writePackageDocument(book, resultStream, version);
 		resultStream.close();
+		if (StringUtil.isNotBlank(book.getZipPath())) {
+			FileUtils.deleteQuietly(new File(book.getZipPath()));
+		}
 	}
 
 	private Book processBook(Book book) {
@@ -92,7 +86,19 @@ public class EpubWriter {
 			log.error("Error writing table of contents: " + e.getClass().getName() + ": " + e.getMessage());
 		}
 	}
-	
+
+	private void initNavResource(Book book) {
+		if (book.getNavResource() != null)
+			return;
+		Resource navResource;
+		try {
+			navResource = NavDocument.createNavResource(book);
+			book.getResources().add(navResource);
+			book.getManifest().addReference(new ManifestItemReference(navResource, ManifestItemProperties.NAV));
+		} catch (IOException e) {
+			log.error("Error writeing nav document: " + e.getClass().getName() + ": " + e.getMessage());
+		}
+	}
 
 	private void writeResources(Book book, ZipOutputStream resultStream) throws IOException {
 		for(Resource resource: book.getResources().getAll()) {
@@ -121,15 +127,19 @@ public class EpubWriter {
 			log.error(e.getMessage(), e);
 		}
 	}
-	
 
-	private void writePackageDocument(Book book, ZipOutputStream resultStream) throws IOException {
+	private void writePackageDocument(Book book, ZipOutputStream resultStream, Version version) throws IOException {
 		resultStream.putNextEntry(new ZipEntry("OEBPS/content.opf"));
 		XmlSerializer xmlSerializer = EpubProcessorSupport.createXmlSerializer(resultStream);
-		PackageDocumentWriter.write(this, xmlSerializer, book);
+		PackageDocumentWriter writer;
+		if (version == Version.V2) {
+			writer = new Epub2PackageDocumentWriter(book, xmlSerializer);
+		} else {
+			writer = new Epub3PackageDocumentWriter(book, xmlSerializer);
+		}
+
+		writer.write();
 		xmlSerializer.flush();
-//		String resultAsString = result.toString();
-//		resultStream.write(resultAsString.getBytes(Constants.ENCODING));
 	}
 
 	/**
@@ -150,6 +160,12 @@ public class EpubWriter {
 		out.flush();
 	}
 
+	/**
+	 * Write the META-INF/com.apple.ibooks.display-options.xml file.
+	 *
+	 * @param resultStream
+	 * @throws IOException
+     */
     private void writeiBooksDisplayOption(ZipOutputStream resultStream) throws IOException {
         resultStream.putNextEntry(new ZipEntry("META-INF/com.apple.ibooks.display-options.xml"));
         Writer out = new OutputStreamWriter(resultStream);
