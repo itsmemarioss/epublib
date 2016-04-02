@@ -12,12 +12,7 @@ import java.util.zip.ZipOutputStream;
 import javax.xml.stream.FactoryConfigurationError;
 
 import nl.siegmann.epublib.Constants;
-import nl.siegmann.epublib.domain.Author;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Identifier;
-import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.domain.TOCReference;
-import nl.siegmann.epublib.domain.TableOfContents;
+import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.service.MediatypeService;
 import nl.siegmann.epublib.util.ResourceUtil;
 import nl.siegmann.epublib.util.StringUtil;
@@ -180,7 +175,7 @@ public class NCXDocument {
 	public static Resource createNCXResource(Book book) throws IllegalArgumentException, IllegalStateException, IOException {
 		return createNCXResource(book.getMetadata().getIdentifiers(), book.getTitle(), book.getMetadata().getAuthors(), book.getTableOfContents());
 	}
-	public static Resource createNCXResource(List<Identifier> identifiers, String title, List<Author> authors, TableOfContents tableOfContents) throws IllegalArgumentException, IllegalStateException, IOException {
+	public static Resource createNCXResource(List<Identifier> identifiers, DcmesElement title, List<Author> authors, TableOfContents tableOfContents) throws IllegalArgumentException, IllegalStateException, IOException {
 		ByteArrayOutputStream data = new ByteArrayOutputStream();
 		XmlSerializer out = EpubProcessorSupport.createXmlSerializer(data);
 		write(out, identifiers, title, authors, tableOfContents);
@@ -188,7 +183,7 @@ public class NCXDocument {
 		return resource;
 	}	
 	
-	public static void write(XmlSerializer serializer, List<Identifier> identifiers, String title, List<Author> authors, TableOfContents tableOfContents) throws IllegalArgumentException, IllegalStateException, IOException {
+	public static void write(XmlSerializer serializer, List<Identifier> identifiers, DcmesElement title, List<Author> authors, TableOfContents tableOfContents) throws IllegalArgumentException, IllegalStateException, IOException {
 		serializer.startDocument(Constants.CHARACTER_ENCODING, false);
 		serializer.setPrefix(EpubWriter.EMPTY_NAMESPACE_PREFIX, NAMESPACE_NCX);
 		serializer.startTag(NAMESPACE_NCX, NCXTags.ncx);
@@ -211,7 +206,12 @@ public class NCXDocument {
 		serializer.startTag(NAMESPACE_NCX, NCXTags.docTitle);
 		serializer.startTag(NAMESPACE_NCX, NCXTags.text);
 		// write the first title
-		serializer.text(StringUtil.defaultIfNull(title));
+		// write the first title
+		String titleValue = null;
+		if (title != null) {
+			titleValue = title.getValue();
+		}
+		serializer.text(StringUtil.defaultIfNull(titleValue));
 		serializer.endTag(NAMESPACE_NCX, NCXTags.text);
 		serializer.endTag(NAMESPACE_NCX, NCXTags.docTitle);
 		
