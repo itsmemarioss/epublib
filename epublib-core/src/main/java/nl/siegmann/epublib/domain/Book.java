@@ -310,6 +310,7 @@ public class Book implements Serializable {
 	private Resource navResource;
 	private Resource coverImage;
 	private String uniqueId = "";
+	private String packageId;
 	private String zipPath;
 	
 	/**
@@ -582,6 +583,14 @@ public class Book implements Serializable {
 
 	public void setUniqueId(String uniqueId) {
 		this.uniqueId = uniqueId;
+	}
+
+	public String getPackageId() {
+		return packageId;
+	}
+
+	public void setPackageId(String packageId) {
+		this.packageId = packageId;
 	}
 
 	public String getZipPath() {

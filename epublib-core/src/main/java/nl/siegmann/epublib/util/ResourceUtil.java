@@ -3,17 +3,16 @@ package nl.siegmann.epublib.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 
-import net.sf.jazzlib.ZipEntry;
-import net.sf.jazzlib.ZipInputStream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import nl.siegmann.epublib.Constants;
-import nl.siegmann.epublib.domain.MediaType;
+import nl.siegmann.epublib.domain.MediaTypeProperty;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.EpubProcessorSupport;
 import nl.siegmann.epublib.service.MediatypeService;
@@ -34,9 +33,9 @@ public class ResourceUtil {
 		if (file == null) {
 			return null;
 		}
-		MediaType mediaType = MediatypeService.determineMediaType(file.getName());
+		MediaTypeProperty mediaTypeProperty = MediatypeService.determineMediaType(file.getName());
 		byte[] data = IOUtil.toByteArray(new FileInputStream(file));
-		Resource result = new Resource(data, mediaType);
+		Resource result = new Resource(data, mediaTypeProperty);
 		return result;
 	}
 	
@@ -63,13 +62,12 @@ public class ResourceUtil {
 	 */
 	public static Resource createResource(ZipEntry zipEntry, ZipInputStream zipInputStream) throws IOException {
 		return new Resource(zipInputStream, zipEntry.getName());
-
 	}
 
-    public static Resource createResource(ZipEntry zipEntry, InputStream zipInputStream) throws IOException {
-        return new Resource(zipInputStream, zipEntry.getName());
-
-    }
+//    public static Resource createResource(ZipEntry zipEntry, InputStream zipInputStream) throws IOException {
+//        return new Resource(zipInputStream, zipEntry.getName());
+//
+//    }
 
 	/**
 	 * Converts a given string from given input character encoding to the requested output character encoding.

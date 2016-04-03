@@ -18,6 +18,12 @@ public class DcmesElement implements Serializable {
     // refines metas
     List<Meta> metas = new ArrayList<Meta>();
 
+    public DcmesElement(){}
+
+    public DcmesElement(String value){
+        this.value = value;
+    }
+
     public String getId() {
         return id;
     }

@@ -162,7 +162,6 @@ public class Metadata implements Serializable {
 		return null;
 	}
 	
-	
 	public DcmesElement addTitle(DcmesElement title) {
 		this.titles.add(title);
 		return title;
