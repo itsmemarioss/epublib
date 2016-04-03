@@ -124,12 +124,10 @@ public class Metadata implements Serializable {
 	public void setLanguages(List<DcmesElement> languages) {
 		this.languages = languages;
 	}
-//	public String getLanguage() {
-//		return language;
-//	}
-//	public void setLanguage(String language) {
-//		this.language = language;
-//	}
+	public void setLanguage(DcmesElement language) {
+		languages.add(language);
+	}
+
 	public List<DcmesElement> getSubjects() {
 		return subjects;
 	}

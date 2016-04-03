@@ -79,9 +79,11 @@ public class EpubWriter {
 			Resource currentTocResource = book.getSpine().getTocResource();
 			if (currentTocResource != null) {
 				book.getResources().remove(currentTocResource.getHref());
+				book.getManifest().removeManifestItem(currentTocResource.getHref());
 			}
 			book.getSpine().setTocResource(tocResource);
 			book.getResources().add(tocResource);
+			book.getManifest().addReference(new ManifestItemReference(tocResource, null));
 		} catch (Exception e) {
 			log.error("Error writing table of contents: " + e.getClass().getName() + ": " + e.getMessage());
 		}
