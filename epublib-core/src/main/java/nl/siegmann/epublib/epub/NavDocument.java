@@ -183,6 +183,9 @@ public class NavDocument {
         serializer.startTag(NAMESPACE_HTML, NAVTags.nav);
         serializer.attribute(EMPTY_NAMESPACE_PREFIX, NAVAttributes.epubType, NAVAttributeValues.toc);
         serializer.attribute(EMPTY_NAMESPACE_PREFIX, NAVAttributes.id, NAVAttributeValues.toc);
+        serializer.startTag(NAMESPACE_HTML, NAVTags.h1);
+        serializer.text("Table of Contents");
+        serializer.endTag(NAMESPACE_HTML, NAVTags.h1);
         serializer.startTag(NAMESPACE_HTML, NAVTags.ol);
         writeTOCReferences(serializer, book.getTableOfContents().getTocReferences());
         serializer.endTag(NAMESPACE_HTML, NAVTags.ol);
