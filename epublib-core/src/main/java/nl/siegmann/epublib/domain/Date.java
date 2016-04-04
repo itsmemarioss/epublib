@@ -13,7 +13,7 @@ import nl.siegmann.epublib.epub.PackageDocumentBase;
  * @author paul
  *
  */
-public class Date extends DcmesElement {
+public class Date extends Meta {
 	/**
 	 * 
 	 */
