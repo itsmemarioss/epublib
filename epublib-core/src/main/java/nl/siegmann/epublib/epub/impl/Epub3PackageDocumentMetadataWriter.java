@@ -56,10 +56,6 @@ public class Epub3PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         }
     }
 
-    private void writeDcmesElement(String tagName, Date date) {
-
-    }
-
     private void writeDcmesElement(String tagName, DcmesElement element) throws IOException {
         if (element != null && StringUtil.isNotBlank(element.getValue())) {
             serializer.startTag(NAMESPACE_DUBLIN_CORE, tagName);

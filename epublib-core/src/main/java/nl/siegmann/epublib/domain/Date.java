@@ -13,7 +13,7 @@ import nl.siegmann.epublib.epub.PackageDocumentBase;
  * @author paul
  *
  */
-public class Date implements Serializable {
+public class Date extends DcmesElement {
 	/**
 	 * 
 	 */
