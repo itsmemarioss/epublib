@@ -1,0 +1,31 @@
+allprojects  {
+  apply plugin: 'maven'
+
+  group = 'nl.siegmann.epublib'
+version = '3.1'
+}
+
+subprojects {
+  apply plugin: 'java'
+  sourceCompatibility = 1.6
+  targetCompatibility = 1.6
+
+  task packageSources(type: Jar) {
+classifier = 'sources'
+from sourceSets.main.allSource
+
+}
+artifacts.archives packageSources
+  repositories {
+    mavenLocal()
+    
+    maven { url "http://repo1.maven.org/maven2/" }
+    maven { url "https://repository.jboss.org/nexus/" }
+    maven { url "http://repo.maven.apache.org/maven2" }
+    maven { url "http://download.java.net/maven/2/" }
+  }
+
+  
+  
+  
+}
