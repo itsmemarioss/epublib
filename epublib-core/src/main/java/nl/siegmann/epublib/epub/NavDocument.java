@@ -25,7 +25,6 @@ import static nl.siegmann.epublib.epub.PackageDocumentBase.NAMESPACE_OPF;
 
 /**
  * nav document read and write
- *
  * @author LinQ
  * @version 2013-05-24
  */
@@ -69,7 +68,7 @@ public class NavDocument {
         Manifest manifest = book.getManifest();
         for (ManifestItemReference reference : manifest.getReferences()) {
             if (reference.getProperties() == ManifestItemProperties.NAV) {
-                navResource =  reference.getResource();
+                navResource = reference.getResource();
                 break;
             }
         }
@@ -96,7 +95,8 @@ public class NavDocument {
             NodeList navList = navDocument.getDocumentElement().getElementsByTagName(NAVTags.nav);
             for (int i = 0; i < navList.getLength(); i++) {
                 Element navElement = (Element) navList.item(i);
-                if (navElement.hasAttribute(NAVAttributes.epubType) && navElement.getAttribute(NAVAttributes.epubType).equals(NAVAttributeValues.toc)) {
+                if (navElement.hasAttribute(NAVAttributes.epubType) && navElement.getAttribute(NAVAttributes.epubType)
+                                                                                 .equals(NAVAttributeValues.toc)) {
                     NodeList list = navElement.getElementsByTagName(NAVTags.ol);
                     Element olElement = (Element) list.item(0);
                     return readTOCReferences(olElement, book);
@@ -117,7 +117,7 @@ public class NavDocument {
             if (node.getNodeType() != Document.ELEMENT_NODE) {
                 continue;
             }
-            if (! (node.getLocalName().equals(NAVTags.li))) {
+            if (!(node.getLocalName().equals(NAVTags.li))) {
                 continue;
             }
             TOCReference tocReference = readTOCReference((Element) node, book);
@@ -194,7 +194,8 @@ public class NavDocument {
         serializer.endTag(NAMESPACE_HTML, NAVTags.html);
     }
 
-    public static void writeTOCReferences(XmlSerializer serializer, List<TOCReference> tocReferences) throws IOException {
+    public static void writeTOCReferences(XmlSerializer serializer, List<TOCReference> tocReferences) throws
+            IOException {
         for (TOCReference tocReference : tocReferences) {
             if (tocReference.getChildren().size() > 0) {
                 if (StringUtil.isNotBlank(tocReference.getTitle())) {

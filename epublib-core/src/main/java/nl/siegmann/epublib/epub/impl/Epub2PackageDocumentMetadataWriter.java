@@ -12,7 +12,6 @@ import java.util.Map;
 
 /**
  * package document metadata writer for epub2
- *
  * @author LinQ
  * @version 2013-05-29
  */
@@ -37,25 +36,27 @@ public class Epub2PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         writeSimpleMetdataElements(DCTags.rights, book.getMetadata().getRights(), serializer);
 
         // write authors
-        for(Author author: book.getMetadata().getAuthors()) {
+        for (Author author : book.getMetadata().getAuthors()) {
             serializer.startTag(NAMESPACE_DUBLIN_CORE, DCTags.creator);
             serializer.attribute(NAMESPACE_OPF, OPFAttributes.role, author.getRelator().getCode());
-            serializer.attribute(NAMESPACE_OPF, OPFAttributes.file_as, author.getLastname() + ", " + author.getFirstname());
+            serializer.attribute(NAMESPACE_OPF, OPFAttributes.file_as,
+                    author.getLastname() + ", " + author.getFirstname());
             serializer.text(author.getFirstname() + " " + author.getLastname());
             serializer.endTag(NAMESPACE_DUBLIN_CORE, DCTags.creator);
         }
 
         // write contributors
-        for(Author author: book.getMetadata().getContributors()) {
+        for (Author author : book.getMetadata().getContributors()) {
             serializer.startTag(NAMESPACE_DUBLIN_CORE, DCTags.contributor);
             serializer.attribute(NAMESPACE_OPF, OPFAttributes.role, author.getRelator().getCode());
-            serializer.attribute(NAMESPACE_OPF, OPFAttributes.file_as, author.getLastname() + ", " + author.getFirstname());
+            serializer.attribute(NAMESPACE_OPF, OPFAttributes.file_as,
+                    author.getLastname() + ", " + author.getFirstname());
             serializer.text(author.getFirstname() + " " + author.getLastname());
             serializer.endTag(NAMESPACE_DUBLIN_CORE, DCTags.contributor);
         }
 
         // write dates
-        for (Date date: book.getMetadata().getDates()) {
+        for (Date date : book.getMetadata().getDates()) {
             serializer.startTag(NAMESPACE_DUBLIN_CORE, DCTags.date);
             if (date.getEvent() != null) {
                 serializer.attribute(NAMESPACE_OPF, OPFAttributes.event, date.getEvent().toString());
@@ -65,14 +66,14 @@ public class Epub2PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         }
 
         // write language
-        if(book.getMetadata().getLanguages() != null && book.getMetadata().getLanguages().size() > 0) {
+        if (book.getMetadata().getLanguages() != null && book.getMetadata().getLanguages().size() > 0) {
             serializer.startTag(NAMESPACE_DUBLIN_CORE, "language");
             serializer.text(book.getMetadata().getLanguages().get(0).getValue());
             serializer.endTag(NAMESPACE_DUBLIN_CORE, "language");
         }
 
         // write other properties
-        if(book.getMetadata().getMetas() != null) {
+        if (book.getMetadata().getMetas() != null) {
             for (Meta meta : book.getMetadata().getMetas()) {
                 serializer.startTag(NAMESPACE_OPF, OPFTags.meta);
                 for (Map.Entry<String, String> entry : meta.getCustomProperties().entrySet()) {
@@ -83,7 +84,7 @@ public class Epub2PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         }
 
         // write coverimage
-        if(book.getCoverImage() != null) { // write the cover image
+        if (book.getCoverImage() != null) { // write the cover image
             serializer.startTag(NAMESPACE_OPF, OPFTags.meta);
             serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.name, OPFValues.meta_cover);
             serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.content, book.getCoverImage().getId());
@@ -99,8 +100,9 @@ public class Epub2PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         serializer.endTag(NAMESPACE_OPF, OPFTags.metadata);
     }
 
-    private void writeSimpleMetdataElements(String tagName, List<DcmesElement> values, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
-        for(DcmesElement element: values) {
+    private void writeSimpleMetdataElements(String tagName, List<DcmesElement> values, XmlSerializer serializer) throws
+            IllegalArgumentException, IllegalStateException, IOException {
+        for (DcmesElement element : values) {
             if (StringUtil.isBlank(element.getValue())) {
                 continue;
             }
@@ -112,20 +114,20 @@ public class Epub2PackageDocumentMetadataWriter extends PackageDocumentMetadataW
 
 
     /**
-     * Writes out the complete list of Identifiers to the package document.
-     * The first identifier for which the bookId is true is made the bookId identifier.
-     * If no identifier has bookId == true then the first bookId identifier is written as the primary.
-     *
+     * Writes out the complete list of Identifiers to the package document. The first identifier for which the bookId is
+     * true is made the bookId identifier. If no identifier has bookId == true then the first bookId identifier is
+     * written as the primary.
      * @param identifiers identifiers
-     * @param serializer serializer
+     * @param serializer  serializer
      * @throws IOException
      * @throws IllegalStateException
      * @throws IllegalArgumentException
      * @
      */
-    private void writeIdentifiers(List<Identifier> identifiers, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException  {
+    private void writeIdentifiers(List<Identifier> identifiers, XmlSerializer serializer) throws
+            IllegalArgumentException, IllegalStateException, IOException {
         Identifier bookIdIdentifier = Identifier.getBookIdIdentifier(identifiers);
-        if(bookIdIdentifier == null) {
+        if (bookIdIdentifier == null) {
             return;
         }
 
@@ -135,8 +137,8 @@ public class Epub2PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         serializer.text(bookIdIdentifier.getValue());
         serializer.endTag(NAMESPACE_DUBLIN_CORE, DCTags.identifier);
 
-        for(Identifier identifier: identifiers.subList(1, identifiers.size())) {
-            if(identifier == bookIdIdentifier) {
+        for (Identifier identifier : identifiers.subList(1, identifiers.size())) {
+            if (identifier == bookIdIdentifier) {
                 continue;
             }
             serializer.startTag(NAMESPACE_DUBLIN_CORE, DCTags.identifier);

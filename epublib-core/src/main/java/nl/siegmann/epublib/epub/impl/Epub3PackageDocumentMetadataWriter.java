@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- *  package document metadata writer for epub3
- *
+ * package document metadata writer for epub3
  * @author LinQ
  * @version 2013-05-29
  */
@@ -47,8 +46,9 @@ public class Epub3PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         serializer.endTag(NAMESPACE_OPF, OPFTags.metadata);
     }
 
-    private void writeDcmesElements(String tagName, List<DcmesElement> values) throws IllegalArgumentException, IllegalStateException, IOException {
-        for(DcmesElement element: values) {
+    private void writeDcmesElements(String tagName, List<DcmesElement> values) throws IllegalArgumentException,
+            IllegalStateException, IOException {
+        for (DcmesElement element : values) {
             if (StringUtil.isBlank(element.getValue())) {
                 continue;
             }
@@ -109,17 +109,17 @@ public class Epub3PackageDocumentMetadataWriter extends PackageDocumentMetadataW
 
 
     /**
-     * Writes out the complete list of Identifiers to the package document.
-     * The first identifier for which the bookId is true is made the bookId identifier.
-     * If no identifier has bookId == true then the first bookId identifier is written as the primary.
-     *
+     * Writes out the complete list of Identifiers to the package document. The first identifier for which the bookId is
+     * true is made the bookId identifier. If no identifier has bookId == true then the first bookId identifier is
+     * written as the primary.
      * @param identifiers identifiers
      * @throws IOException
      * @throws IllegalStateException
      * @throws IllegalArgumentException
      * @
      */
-    private void writeIdentifiers(List<Identifier> identifiers) throws IllegalArgumentException, IllegalStateException, IOException {
+    private void writeIdentifiers(List<Identifier> identifiers) throws IllegalArgumentException, IllegalStateException,
+            IOException {
         for (Identifier identifier : identifiers) {
             writeDcmesElement(DCTags.identifier, identifier);
         }

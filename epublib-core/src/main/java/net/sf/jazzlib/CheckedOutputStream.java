@@ -47,51 +47,49 @@ import java.io.OutputStream;
  */
 
 /**
- * OutputStream that computes a checksum of data being written using a supplied
- * Checksum object.
- *
- * @see Checksum
- *
+ * OutputStream that computes a checksum of data being written using a supplied Checksum object.
  * @author Tom Tromey
  * @date May 17, 1999
+ * @see Checksum
  */
 public class CheckedOutputStream extends FilterOutputStream {
-	/**
-	 * Creates a new CheckInputStream on top of the supplied OutputStream using
-	 * the supplied Checksum.
-	 */
-	public CheckedOutputStream(final OutputStream out, final Checksum cksum) {
-		super(out);
-		this.sum = cksum;
-	}
+    /**
+     * Creates a new CheckInputStream on top of the supplied OutputStream using the supplied Checksum.
+     */
+    public CheckedOutputStream(final OutputStream out, final Checksum cksum) {
+        super(out);
+        this.sum = cksum;
+    }
 
-	/**
-	 * Returns the Checksum object used. To get the data checksum computed so
-	 * far call <code>getChecksum.getValue()</code>.
-	 */
-	public Checksum getChecksum() {
-		return sum;
-	}
+    /**
+     * Returns the Checksum object used. To get the data checksum computed so far call
+     * <code>getChecksum.getValue()</code>.
+     */
+    public Checksum getChecksum() {
+        return sum;
+    }
 
-	/**
-	 * Writes one byte to the OutputStream and updates the Checksum.
-	 */
-	@Override
-	public void write(final int bval) throws IOException {
-		out.write(bval);
-		sum.update(bval);
-	}
+    /**
+     * Writes one byte to the OutputStream and updates the Checksum.
+     */
+    @Override
+    public void write(final int bval) throws IOException {
+        out.write(bval);
+        sum.update(bval);
+    }
 
-	/**
-	 * Writes the byte array to the OutputStream and updates the Checksum.
-	 */
-	@Override
-	public void write(final byte[] buf, final int off, final int len)
-			throws IOException {
-		out.write(buf, off, len);
-		sum.update(buf, off, len);
-	}
+    /**
+     * Writes the byte array to the OutputStream and updates the Checksum.
+     */
+    @Override
+    public void write(final byte[] buf, final int off, final int len)
+            throws IOException {
+        out.write(buf, off, len);
+        sum.update(buf, off, len);
+    }
 
-	/** The checksum object. */
-	private final Checksum sum;
+    /**
+     * The checksum object.
+     */
+    private final Checksum sum;
 }

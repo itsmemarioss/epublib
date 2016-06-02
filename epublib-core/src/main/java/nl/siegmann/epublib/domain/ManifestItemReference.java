@@ -2,7 +2,6 @@ package nl.siegmann.epublib.domain;
 
 /**
  * a manirest item of the manitest
- *
  * @author LinQ
  * @version 2013-05-23
  */

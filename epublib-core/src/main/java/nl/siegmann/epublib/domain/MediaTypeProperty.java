@@ -6,15 +6,12 @@ import java.util.Collection;
 
 /**
  * MediaType is used to tell the type of content a resource is.
- *
+ * <p>
  * Examples of mediatypes are image/gif, text/css and application/xhtml+xml
- *
+ * <p>
  * All allowed mediaTypes are maintained bye the MediaTypeService.
- *
- * @see nl.siegmann.epublib.service.MediatypeService
- *
  * @author paul
- *
+ * @see nl.siegmann.epublib.service.MediatypeService
  */
 public class MediaTypeProperty implements Serializable {
     /**
@@ -40,6 +37,7 @@ public class MediaTypeProperty implements Serializable {
         }
         return name.hashCode();
     }
+
     public MediaTypeProperty(String name, String defaultExtension,
                              Collection<String> extensions) {
         super();
@@ -64,7 +62,7 @@ public class MediaTypeProperty implements Serializable {
     }
 
     public boolean equals(Object otherMediaType) {
-        if(! (otherMediaType instanceof MediaTypeProperty)) {
+        if (!(otherMediaType instanceof MediaTypeProperty)) {
             return false;
         }
         return name.equals(((MediaTypeProperty) otherMediaType).getName());

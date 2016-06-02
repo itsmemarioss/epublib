@@ -19,27 +19,27 @@ import org.apache.commons.lang.StringUtils;
  */
 public class SectionHrefSanityCheckBookProcessor implements BookProcessor {
 
-	@Override
-	public Book processBook(Book book) {
-		book.getSpine().setSpineReferences(checkSpineReferences(book.getSpine()));
-		return book;
-	}
+    @Override
+    public Book processBook(Book book) {
+        book.getSpine().setSpineReferences(checkSpineReferences(book.getSpine()));
+        return book;
+    }
 
-	private static List<SpineReference> checkSpineReferences(Spine spine) {
-		List<SpineReference> result = new ArrayList<SpineReference>(spine.size());
-		Resource previousResource = null;
-		for(SpineReference spineReference: spine.getSpineReferences()) {
-			if(spineReference.getResource() == null
-					|| StringUtils.isBlank(spineReference.getResource().getHref())) {
-				continue;
-			}
-			if(previousResource == null
-					|| spineReference.getResource() == null
-					|| ( ! (spineReference.getResource().getHref().equals(previousResource.getHref())))) {
-				result.add(spineReference);
-			}
-			previousResource = spineReference.getResource();
-		}
-		return result;
-	}
+    private static List<SpineReference> checkSpineReferences(Spine spine) {
+        List<SpineReference> result = new ArrayList<SpineReference>(spine.size());
+        Resource previousResource = null;
+        for(SpineReference spineReference: spine.getSpineReferences()) {
+            if(spineReference.getResource() == null
+                    || StringUtils.isBlank(spineReference.getResource().getHref())) {
+                continue;
+            }
+            if(previousResource == null
+                    || spineReference.getResource() == null
+                    || ( ! (spineReference.getResource().getHref().equals(previousResource.getHref())))) {
+                result.add(spineReference);
+            }
+            previousResource = spineReference.getResource();
+        }
+        return result;
+    }
 }

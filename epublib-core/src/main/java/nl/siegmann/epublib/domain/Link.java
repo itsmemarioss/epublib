@@ -2,7 +2,6 @@ package nl.siegmann.epublib.domain;
 
 /**
  * link Element
- *
  * @author LinQ
  * @version 2013-05-28
  */

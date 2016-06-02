@@ -11,9 +11,9 @@ import nl.siegmann.epublib.epub.BookProcessor;
  */
 public class HtmlSplitterBookProcessor implements BookProcessor {
 
-	@Override
-	public Book processBook(Book book) {
-		return book;
-	}
+    @Override
+    public Book processBook(Book book) {
+        return book;
+    }
 
 }

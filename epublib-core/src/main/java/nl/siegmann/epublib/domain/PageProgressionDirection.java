@@ -4,7 +4,6 @@ import nl.siegmann.epublib.util.StringUtil;
 
 /**
  * page-progression-direction of spine
- *
  * @author LinQ
  * @version 2013-05-29
  */

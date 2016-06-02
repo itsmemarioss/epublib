@@ -7,7 +7,6 @@ import java.util.Map;
 
 /**
  * metadata meta
- *
  * @author LinQ
  * @version 2013-05-27
  */
@@ -17,9 +16,9 @@ public class Meta extends DcmesElement {
     private String scheme;
     private Map<String, String> customProperties = new HashMap<String, String>();
 
-    public Meta(){}
+    public Meta() {}
 
-    public Meta(Property property,String value){
+    public Meta(Property property, String value) {
         this.property = property.value();
         this.setValue(value);
     }
@@ -28,11 +27,12 @@ public class Meta extends DcmesElement {
         DCTERMS_MODIFIED("dcterms:modified");
 
         private final String value;
+
         Property(String v) {
             value = v;
         }
 
-        public String value(){
+        public String value() {
             return this.value;
         }
     }

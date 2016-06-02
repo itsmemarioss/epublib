@@ -21,20 +21,20 @@ import org.slf4j.LoggerFactory;
  */
 public class DefaultBookProcessorPipeline extends BookProcessorPipeline {
 
-	private Logger log = LoggerFactory.getLogger(DefaultBookProcessorPipeline.class);
+    private Logger log = LoggerFactory.getLogger(DefaultBookProcessorPipeline.class);
 
-	public DefaultBookProcessorPipeline() {
-		super(createDefaultBookProcessors());
-	}
+    public DefaultBookProcessorPipeline() {
+        super(createDefaultBookProcessors());
+    }
 
-	private static List<BookProcessor> createDefaultBookProcessors() {
-		List<BookProcessor> result = new ArrayList<BookProcessor>();
-		result.addAll(Arrays.asList(new BookProcessor[] {
-			new SectionHrefSanityCheckBookProcessor(),
-			new HtmlCleanerBookProcessor(),
-			new CoverpageBookProcessor(),
-			new FixIdentifierBookProcessor()
-		}));
-		return result;
-	}
+    private static List<BookProcessor> createDefaultBookProcessors() {
+        List<BookProcessor> result = new ArrayList<BookProcessor>();
+        result.addAll(Arrays.asList(new BookProcessor[] {
+            new SectionHrefSanityCheckBookProcessor(),
+            new HtmlCleanerBookProcessor(),
+            new CoverpageBookProcessor(),
+            new FixIdentifierBookProcessor()
+        }));
+        return result;
+    }
 }

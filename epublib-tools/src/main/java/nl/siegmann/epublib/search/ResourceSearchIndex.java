@@ -10,20 +10,20 @@ import nl.siegmann.epublib.domain.Resource;
  */
 // package
 class ResourceSearchIndex {
-	private String content;
-	private Resource resource;
+    private String content;
+    private Resource resource;
 
-	public ResourceSearchIndex(Resource resource, String searchContent) {
-		this.resource = resource;
-		this.content = searchContent;
-	}
+    public ResourceSearchIndex(Resource resource, String searchContent) {
+        this.resource = resource;
+        this.content = searchContent;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public Resource getResource() {
-		return resource;
-	}
+    public Resource getResource() {
+        return resource;
+    }
 
 }

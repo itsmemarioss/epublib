@@ -1,21 +1,16 @@
 package nl.siegmann.epublib.epub;
 
-import static org.junit.Assert.assertEquals;
+import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.service.MediatypeService;
+import nl.siegmann.epublib.util.IOUtil;
+import org.junit.*;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.service.MediatypeService;
-import nl.siegmann.epublib.util.IOUtil;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 public class NCXDocumentTest {
 
@@ -46,13 +41,13 @@ public class NCXDocumentTest {
         book.addResource(chapterResource);
         book.getSpine().addResource(chapterResource);
     }
-    
+
     /**
      * Test of read method, of class NCXDocument.
      */
     @Test
     public void testReadWithNonRootLevelTOC() {
-        
+
         // If the tox.ncx file is not in the root, the hrefs it refers to need to preserve its path.
         Book book = new Book();
         Resource ncxResource = new Resource(ncxData, "xhtml/toc.ncx");

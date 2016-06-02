@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * DCMES element
- *
  * @author LinQ
  * @version 2013-05-27
  */
@@ -18,9 +17,9 @@ public class DcmesElement implements Serializable {
     // refines metas
     List<Meta> metas = new ArrayList<Meta>();
 
-    public DcmesElement(){}
+    public DcmesElement() {}
 
-    public DcmesElement(String value){
+    public DcmesElement(String value) {
         this.value = value;
     }
 

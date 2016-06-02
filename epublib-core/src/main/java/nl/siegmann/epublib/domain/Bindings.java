@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * The bindings Element
- *
  * @author LinQ
  * @version 2013-05-29
  */

@@ -39,161 +39,153 @@ package net.sf.jazzlib;
 
 /**
  * This class is general purpose class for writing data to a buffer.
- *
+ * <p>
  * It allows you to write bits as well as bytes
- *
+ * <p>
  * Based on DeflaterPending.java
- *
  * @author Jochen Hoenicke
  * @date Jan 5, 2000
  */
 
 class PendingBuffer {
-	protected byte[] buf;
-	int start;
-	int end;
+    protected byte[] buf;
+    int start;
+    int end;
 
-	int bits;
-	int bitCount;
+    int bits;
+    int bitCount;
 
-	public PendingBuffer() {
-		this(4096);
-	}
+    public PendingBuffer() {
+        this(4096);
+    }
 
-	public PendingBuffer(final int bufsize) {
-		buf = new byte[bufsize];
-	}
+    public PendingBuffer(final int bufsize) {
+        buf = new byte[bufsize];
+    }
 
-	public final void reset() {
-		start = end = bitCount = 0;
-	}
+    public final void reset() {
+        start = end = bitCount = 0;
+    }
 
-	public final void writeByte(final int b) {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		buf[end++] = (byte) b;
-	}
+    public final void writeByte(final int b) {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        buf[end++] = (byte) b;
+    }
 
-	public final void writeShort(final int s) {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		buf[end++] = (byte) s;
-		buf[end++] = (byte) (s >> 8);
-	}
+    public final void writeShort(final int s) {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        buf[end++] = (byte) s;
+        buf[end++] = (byte) (s >> 8);
+    }
 
-	public final void writeInt(final int s) {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		buf[end++] = (byte) s;
-		buf[end++] = (byte) (s >> 8);
-		buf[end++] = (byte) (s >> 16);
-		buf[end++] = (byte) (s >> 24);
-	}
+    public final void writeInt(final int s) {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        buf[end++] = (byte) s;
+        buf[end++] = (byte) (s >> 8);
+        buf[end++] = (byte) (s >> 16);
+        buf[end++] = (byte) (s >> 24);
+    }
 
-	public final void writeBlock(final byte[] block, final int offset,
-			final int len) {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		System.arraycopy(block, offset, buf, end, len);
-		end += len;
-	}
+    public final void writeBlock(final byte[] block, final int offset,
+                                 final int len) {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        System.arraycopy(block, offset, buf, end, len);
+        end += len;
+    }
 
-	public final int getBitCount() {
-		return bitCount;
-	}
+    public final int getBitCount() {
+        return bitCount;
+    }
 
-	public final void alignToByte() {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		if (bitCount > 0) {
-			buf[end++] = (byte) bits;
-			if (bitCount > 8) {
-				buf[end++] = (byte) (bits >>> 8);
-			}
-		}
-		bits = 0;
-		bitCount = 0;
-	}
+    public final void alignToByte() {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        if (bitCount > 0) {
+            buf[end++] = (byte) bits;
+            if (bitCount > 8) {
+                buf[end++] = (byte) (bits >>> 8);
+            }
+        }
+        bits = 0;
+        bitCount = 0;
+    }
 
-	public final void writeBits(final int b, final int count) {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		if (DeflaterConstants.DEBUGGING) {
-			System.err.println("writeBits(" + Integer.toHexString(b) + ","
-					+ count + ")");
-		}
-		bits |= b << bitCount;
-		bitCount += count;
-		if (bitCount >= 16) {
-			buf[end++] = (byte) bits;
-			buf[end++] = (byte) (bits >>> 8);
-			bits >>>= 16;
-			bitCount -= 16;
-		}
-	}
+    public final void writeBits(final int b, final int count) {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        if (DeflaterConstants.DEBUGGING) {
+            System.err.println("writeBits(" + Integer.toHexString(b) + ","
+                    + count + ")");
+        }
+        bits |= b << bitCount;
+        bitCount += count;
+        if (bitCount >= 16) {
+            buf[end++] = (byte) bits;
+            buf[end++] = (byte) (bits >>> 8);
+            bits >>>= 16;
+            bitCount -= 16;
+        }
+    }
 
-	public final void writeShortMSB(final int s) {
-		if (DeflaterConstants.DEBUGGING && (start != 0)) {
-			throw new IllegalStateException();
-		}
-		buf[end++] = (byte) (s >> 8);
-		buf[end++] = (byte) s;
-	}
+    public final void writeShortMSB(final int s) {
+        if (DeflaterConstants.DEBUGGING && (start != 0)) {
+            throw new IllegalStateException();
+        }
+        buf[end++] = (byte) (s >> 8);
+        buf[end++] = (byte) s;
+    }
 
-	public final boolean isFlushed() {
-		return end == 0;
-	}
+    public final boolean isFlushed() {
+        return end == 0;
+    }
 
-	/**
-	 * Flushes the pending buffer into the given output array. If the output
-	 * array is to small, only a partial flush is done.
-	 *
-	 * @param output
-	 *            the output array;
-	 * @param offset
-	 *            the offset into output array;
-	 * @param length
-	 *            the maximum number of bytes to store;
-	 * @exception IndexOutOfBoundsException
-	 *                if offset or length are invalid.
-	 */
-	public final int flush(final byte[] output, final int offset, int length) {
-		if (bitCount >= 8) {
-			buf[end++] = (byte) bits;
-			bits >>>= 8;
-			bitCount -= 8;
-		}
-		if (length > (end - start)) {
-			length = end - start;
-			System.arraycopy(buf, start, output, offset, length);
-			start = 0;
-			end = 0;
-		} else {
-			System.arraycopy(buf, start, output, offset, length);
-			start += length;
-		}
-		return length;
-	}
+    /**
+     * Flushes the pending buffer into the given output array. If the output array is to small, only a partial flush is
+     * done.
+     * @param output the output array;
+     * @param offset the offset into output array;
+     * @param length the maximum number of bytes to store;
+     * @throws IndexOutOfBoundsException if offset or length are invalid.
+     */
+    public final int flush(final byte[] output, final int offset, int length) {
+        if (bitCount >= 8) {
+            buf[end++] = (byte) bits;
+            bits >>>= 8;
+            bitCount -= 8;
+        }
+        if (length > (end - start)) {
+            length = end - start;
+            System.arraycopy(buf, start, output, offset, length);
+            start = 0;
+            end = 0;
+        } else {
+            System.arraycopy(buf, start, output, offset, length);
+            start += length;
+        }
+        return length;
+    }
 
-	/**
-	 * Flushes the pending buffer and returns that data in a new array
-	 *
-	 * @param output
-	 *            the output stream
-	 */
+    /**
+     * Flushes the pending buffer and returns that data in a new array
+     * @param output the output stream
+     */
 
-	public final byte[] toByteArray() {
-		final byte[] ret = new byte[end - start];
-		System.arraycopy(buf, start, ret, 0, ret.length);
-		start = 0;
-		end = 0;
-		return ret;
-	}
+    public final byte[] toByteArray() {
+        final byte[] ret = new byte[end - start];
+        System.arraycopy(buf, start, ret, 0, ret.length);
+        start = 0;
+        end = 0;
+        return ret;
+    }
 
 }

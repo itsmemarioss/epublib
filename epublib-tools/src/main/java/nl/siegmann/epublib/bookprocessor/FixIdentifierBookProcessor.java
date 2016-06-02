@@ -12,11 +12,11 @@ import nl.siegmann.epublib.epub.BookProcessor;
  */
 public class FixIdentifierBookProcessor implements BookProcessor {
 
-	@Override
-	public Book processBook(Book book) {
-		if(book.getMetadata().getIdentifiers().isEmpty()) {
-			book.getMetadata().addIdentifier(new Identifier());
-		}
-		return book;
-	}
+    @Override
+    public Book processBook(Book book) {
+        if(book.getMetadata().getIdentifiers().isEmpty()) {
+            book.getMetadata().addIdentifier(new Identifier());
+        }
+        return book;
+    }
 }

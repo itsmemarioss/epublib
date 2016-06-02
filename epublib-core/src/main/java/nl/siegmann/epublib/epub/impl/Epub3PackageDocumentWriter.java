@@ -11,7 +11,6 @@ import java.io.IOException;
 
 /**
  * package document writer for epub3
- *
  * @author LinQ
  * @version 2013-05-29
  */
@@ -34,29 +33,36 @@ public class Epub3PackageDocumentWriter extends PackageDocumentWriter {
             serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.id, book.getManifest().getId());
         }
 
-        for(ManifestItemReference reference : book.getManifest().getReferences()) {
+        for (ManifestItemReference reference : book.getManifest().getReferences()) {
             writeItem(reference);
         }
 
         serializer.endTag(NAMESPACE_OPF, OPFTags.manifest);
     }
 
-    private void writeItem(ManifestItemReference reference) throws IllegalArgumentException, IllegalStateException, IOException {
+    private void writeItem(ManifestItemReference reference) throws IllegalArgumentException, IllegalStateException,
+            IOException {
         Resource resource = reference.getResource();
         MediaTypeProperty mediaTypeProperty = reference.getMediaTypeProperty();
-        if(resource == null) {
+        if (resource == null) {
             return;
         }
-        if(StringUtil.isBlank(resource.getId())) {
-            logger.error("resource id must not be empty (href: " + resource.getHref() + ", mediatype:" + mediaTypeProperty + ")");
+        if (StringUtil.isBlank(resource.getId())) {
+            logger.error(
+                    "resource id must not be empty (href: " + resource.getHref() + ", mediatype:" + mediaTypeProperty +
+                            ")");
             return;
         }
-        if(StringUtil.isBlank(resource.getHref())) {
-            logger.error("resource href must not be empty (id: " + resource.getId() + ", mediatype:" + mediaTypeProperty + ")");
+        if (StringUtil.isBlank(resource.getHref())) {
+            logger.error(
+                    "resource href must not be empty (id: " + resource.getId() + ", mediatype:" + mediaTypeProperty +
+                            ")");
             return;
         }
-        if(mediaTypeProperty == null) {
-            logger.error("resource mediatype must not be empty (id: " + resource.getId() + ", href:" + resource.getHref() + ")");
+        if (mediaTypeProperty == null) {
+            logger.error(
+                    "resource mediatype must not be empty (id: " + resource.getId() + ", href:" + resource.getHref() +
+                            ")");
             return;
         }
         serializer.startTag(NAMESPACE_OPF, OPFTags.item);
@@ -84,11 +90,13 @@ public class Epub3PackageDocumentWriter extends PackageDocumentWriter {
             serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.id, spine.getId());
         }
         if (spine.getDirection() != null) {
-            serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.pageProgressionDirection, spine.getDirection().getValue());
+            serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.pageProgressionDirection,
+                    spine.getDirection().getValue());
         }
 
-        if(book.getCoverPage() != null // there is a cover page
-                &&	spine.findFirstResourceById(book.getCoverPage().getId()) < 0) { // cover page is not already in the spine
+        if (book.getCoverPage() != null // there is a cover page
+                && spine.findFirstResourceById(book.getCoverPage().getId()) <
+                0) { // cover page is not already in the spine
             // write the cover html file
             serializer.startTag(NAMESPACE_OPF, OPFTags.itemref);
             serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.idref, book.getCoverPage().getId());
@@ -105,18 +113,20 @@ public class Epub3PackageDocumentWriter extends PackageDocumentWriter {
      * @throws IllegalStateException
      * @throws IllegalArgumentException
      */
-    private void writeSpineItems(Spine spine, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
-        for(SpineReference spineReference: spine.getSpineReferences()) {
+    private void writeSpineItems(Spine spine, XmlSerializer serializer) throws IllegalArgumentException,
+            IllegalStateException, IOException {
+        for (SpineReference spineReference : spine.getSpineReferences()) {
             serializer.startTag(NAMESPACE_OPF, OPFTags.itemref);
             serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.idref, spineReference.getResourceId());
-            if (! spineReference.isLinear()) {
+            if (!spineReference.isLinear()) {
                 serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.linear, OPFValues.no);
             }
             if (StringUtil.isNotBlank(spineReference.getId())) {
                 serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.id, spineReference.getId());
             }
             if (spineReference.getProperties() != null) {
-                serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.properties, spineReference.getProperties().getName());
+                serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.properties,
+                        spineReference.getProperties().getName());
             }
             serializer.endTag(NAMESPACE_OPF, OPFTags.itemref);
         }
@@ -128,23 +138,26 @@ public class Epub3PackageDocumentWriter extends PackageDocumentWriter {
             return;
         serializer.startTag(NAMESPACE_OPF, OPFTags.guide);
         ensureCoverPageGuideReferenceWritten(book.getGuide(), serializer);
-        for (GuideReference reference: book.getGuide().getReferences()) {
+        for (GuideReference reference : book.getGuide().getReferences()) {
             writeGuideReference(reference, serializer);
         }
         serializer.endTag(NAMESPACE_OPF, OPFTags.guide);
     }
 
-    private void ensureCoverPageGuideReferenceWritten(Guide guide, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
-        if (! (guide.getGuideReferencesByType(GuideReference.COVER).isEmpty())) {
+    private void ensureCoverPageGuideReferenceWritten(Guide guide, XmlSerializer serializer) throws
+            IllegalArgumentException, IllegalStateException, IOException {
+        if (!(guide.getGuideReferencesByType(GuideReference.COVER).isEmpty())) {
             return;
         }
         Resource coverPage = guide.getCoverPage();
         if (coverPage != null) {
-            writeGuideReference(new GuideReference(guide.getCoverPage(), GuideReference.COVER, GuideReference.COVER), serializer);
+            writeGuideReference(new GuideReference(guide.getCoverPage(), GuideReference.COVER, GuideReference.COVER),
+                    serializer);
         }
     }
 
-    private void writeGuideReference(GuideReference reference, XmlSerializer serializer) throws IllegalArgumentException, IllegalStateException, IOException {
+    private void writeGuideReference(GuideReference reference, XmlSerializer serializer) throws
+            IllegalArgumentException, IllegalStateException, IOException {
         if (reference == null) {
             return;
         }
@@ -163,7 +176,8 @@ public class Epub3PackageDocumentWriter extends PackageDocumentWriter {
             serializer.startTag(NAMESPACE_OPF, OPFTags.link);
             for (MediaType mediaType : book.getBindings().getMediaTypes()) {
                 serializer.startTag(NAMESPACE_OPF, OPFTags.mediaType);
-                serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.media_type, mediaType.getMediaTypeProperty().getName());
+                serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.media_type,
+                        mediaType.getMediaTypeProperty().getName());
                 serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.handler, mediaType.getHandler());
                 serializer.endTag(NAMESPACE_OPF, OPFTags.mediaType);
             }

@@ -4,79 +4,74 @@ import java.io.Serializable;
 
 
 /**
- * A Section of a book.
- * Represents both an item in the package document and a item in the index.
- * 
+ * A Section of a book. Represents both an item in the package document and a item in the index.
  * @author paul
- *
  */
 public class SpineReference extends ResourceReference implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7921609197351510248L;
-	private String id;
-	private String idref;
-	private boolean linear = true;
-	private SpineItemRefProperties properties;
-	
-	public SpineReference(Resource resource) {
-		this(resource, true);
-	}
-	
-	
-	public SpineReference(Resource resource, boolean linear) {
-		super(resource);
-		this.linear = linear;
-	}
 
-	/**
-	 * Linear denotes whether the section is Primary or Auxiliary.
-	 * Usually the cover page has linear set to false and all the other sections
-	 * have it set to true.
-	 * 
-	 * It's an optional property that readers may also ignore.
-	 * 
-	 * <blockquote>primary or auxiliary is useful for Reading Systems which
-	 * opt to present auxiliary content differently than primary content.
-	 * For example, a Reading System might opt to render auxiliary content in
-	 * a popup window apart from the main window which presents the primary
-	 * content. (For an example of the types of content that may be considered
-	 * auxiliary, refer to the example below and the subsequent discussion.)</blockquote>
-	 * @see <a href="http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.4">OPF Spine specification</a>
-	 * 
-	 * @return whether the section is Primary or Auxiliary.
-	 */
-	public boolean isLinear() {
-		return linear;
-	}
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7921609197351510248L;
+    private String id;
+    private String idref;
+    private boolean linear = true;
+    private SpineItemRefProperties properties;
 
-	public void setLinear(boolean linear) {
-		this.linear = linear;
-	}
+    public SpineReference(Resource resource) {
+        this(resource, true);
+    }
 
-	public String getId() {
-		return id;
-	}
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public SpineReference(Resource resource, boolean linear) {
+        super(resource);
+        this.linear = linear;
+    }
 
-	public String getIdref() {
-		return idref;
-	}
+    /**
+     * Linear denotes whether the section is Primary or Auxiliary. Usually the cover page has linear set to false and
+     * all the other sections have it set to true.
+     * <p>
+     * It's an optional property that readers may also ignore.
+     * <p>
+     * <blockquote>primary or auxiliary is useful for Reading Systems which opt to present auxiliary content
+     * differently
+     * than primary content. For example, a Reading System might opt to render auxiliary content in a popup window
+     * apart
+     * from the main window which presents the primary content. (For an example of the types of content that may be
+     * considered auxiliary, refer to the example below and the subsequent discussion.)</blockquote>
+     * @return whether the section is Primary or Auxiliary.
+     * @see <a href="http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm#Section2.4">OPF Spine specification</a>
+     */
+    public boolean isLinear() {
+        return linear;
+    }
 
-	public void setIdref(String idref) {
-		this.idref = idref;
-	}
+    public void setLinear(boolean linear) {
+        this.linear = linear;
+    }
 
-	public SpineItemRefProperties getProperties() {
-		return properties;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setProperties(SpineItemRefProperties properties) {
-		this.properties = properties;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getIdref() {
+        return idref;
+    }
+
+    public void setIdref(String idref) {
+        this.idref = idref;
+    }
+
+    public SpineItemRefProperties getProperties() {
+        return properties;
+    }
+
+    public void setProperties(SpineItemRefProperties properties) {
+        this.properties = properties;
+    }
 }
