@@ -153,10 +153,8 @@ public class EpubWriterTest {
 //            try {
 //                writer.write(book, output);
 //            } catch (XMLStreamException e) {
-//                // TODO Auto-generated catch block
 //                e.printStackTrace();
 //            } catch (FactoryConfigurationError e) {
-//                // TODO Auto-generated catch block
 //                e.printStackTrace();
 //            }
 //        }

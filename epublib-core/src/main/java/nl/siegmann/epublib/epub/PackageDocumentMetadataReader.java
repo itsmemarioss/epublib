@@ -34,7 +34,9 @@ class PackageDocumentMetadataReader extends PackageDocumentBase {
         }
         result.setIdentifiers(readIdentifiers(metadataElement));
         result.setTitles(readDcmesElements(DCTags.title, metadataElement, result));
-        result.setLanguages(readDcmesElements(DCTags.language, metadataElement, result));
+        // Be sure we leave the default "en" language if we didn't read any specific ones.
+        List<DcmesElement> languages = readDcmesElements(DCTags.language, metadataElement, result);
+        if (!languages.isEmpty()) result.setLanguages(languages);
         result.setContributors(readContributors(metadataElement, result));
         result.setAuthors(readCreators(metadataElement, result));
         result.setDates(readDates(metadataElement));
@@ -85,7 +87,7 @@ class PackageDocumentMetadataReader extends PackageDocumentBase {
 
     private static List<DcmesElement> readDcmesElements(String tag, Element metadataElement, Metadata metadata) {
         NodeList nodeList = metadataElement.getElementsByTagNameNS(NAMESPACE_DUBLIN_CORE, tag);
-        List<DcmesElement> result = new ArrayList<DcmesElement>();
+        List<DcmesElement> result = new ArrayList<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Element element = (Element) nodeList.item(i);
             DcmesElement dcmes = makeDcmesElement(element);
@@ -119,7 +121,7 @@ class PackageDocumentMetadataReader extends PackageDocumentBase {
      * @return Meta list
      */
     private static List<Meta> readMetas(Element metadataElement) {
-        List<Meta> result = new ArrayList<Meta>();
+        List<Meta> result = new ArrayList<>();
 
         NodeList metaTags = metadataElement.getElementsByTagNameNS(NAMESPACE_OPF, OPFTags.meta);
         for (int i = 0; i < metaTags.getLength(); i++) {
@@ -240,10 +242,10 @@ class PackageDocumentMetadataReader extends PackageDocumentBase {
         NodeList identifierElements = metadataElement.getElementsByTagNameNS(NAMESPACE_DUBLIN_CORE, DCTags.identifier);
         if (identifierElements.getLength() == 0) {
             log.error("Package does not contain element " + DCTags.identifier);
-            return new ArrayList<Identifier>();
+            return new ArrayList<>();
         }
         String bookIdId = getBookIdId(metadataElement.getOwnerDocument());
-        List<Identifier> result = new ArrayList<Identifier>(identifierElements.getLength());
+        List<Identifier> result = new ArrayList<>(identifierElements.getLength());
         for (int i = 0; i < identifierElements.getLength(); i++) {
             Element identifierElement = (Element) identifierElements.item(i);
             String schemeName = identifierElement.getAttributeNS(NAMESPACE_OPF, DCAttributes.scheme);
