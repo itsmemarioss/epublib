@@ -15,7 +15,7 @@ public class DcmesElement implements Serializable {
     private String direction;
     private String value;
     // refines metas
-    List<Meta> metas = new ArrayList<Meta>();
+    private List<Meta> metas = new ArrayList<>();
 
     public DcmesElement() {}
 
@@ -72,5 +72,30 @@ public class DcmesElement implements Serializable {
                 ", value='" + value + '\'' +
                 ", metas=" + metas +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        DcmesElement that = (DcmesElement) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (lang != null ? !lang.equals(that.lang) : that.lang != null) return false;
+        if (direction != null ? !direction.equals(that.direction) : that.direction != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null) return false;
+        return metas != null ? metas.equals(that.metas) : that.metas == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (lang != null ? lang.hashCode() : 0);
+        result = 31 * result + (direction != null ? direction.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
+        result = 31 * result + (metas != null ? metas.hashCode() : 0);
+        return result;
     }
 }

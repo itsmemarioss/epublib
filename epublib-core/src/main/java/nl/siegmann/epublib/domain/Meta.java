@@ -81,4 +81,30 @@ public class Meta extends DcmesElement {
                 ", scheme='" + scheme + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Meta meta = (Meta) o;
+
+        if (property != null ? !property.equals(meta.property) : meta.property != null) return false;
+        if (refines != null ? !refines.equals(meta.refines) : meta.refines != null) return false;
+        if (scheme != null ? !scheme.equals(meta.scheme) : meta.scheme != null) return false;
+        return customProperties != null ? customProperties.equals(meta.customProperties) :
+                meta.customProperties == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + (property != null ? property.hashCode() : 0);
+        result = 31 * result + (refines != null ? refines.hashCode() : 0);
+        result = 31 * result + (scheme != null ? scheme.hashCode() : 0);
+        result = 31 * result + (customProperties != null ? customProperties.hashCode() : 0);
+        return result;
+    }
 }

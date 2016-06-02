@@ -65,8 +65,19 @@ public class EpubWriterTest {
     private Book createTestBook() throws IOException {
         Book book = new Book();
 
-        book.getMetadata().addTitle(new DcmesElement("Epublib test book 1"));
-        book.getMetadata().addTitle(new DcmesElement("test2"));
+        // Create titles and set their other properties to empty string manually, since that's what our EpubWriter
+        // will do for us anyway.
+        DcmesElement title1 = new DcmesElement("Epublib test book 1");
+        title1.setDirection("");
+        title1.setId("");
+        title1.setLang("");
+        DcmesElement title2 = new DcmesElement("test2");
+        title2.setDirection("");
+        title2.setId("");
+        title2.setLang("");
+
+        book.getMetadata().addTitle(title1);
+        book.getMetadata().addTitle(title2);
 
         book.getMetadata().addIdentifier(new Identifier(Identifier.Scheme.ISBN, "987654321"));
         book.getMetadata().addAuthor(new Author("Joe", "Tester"));
@@ -85,7 +96,6 @@ public class EpubWriterTest {
                 new Resource(this.getClass().getResourceAsStream("/book1/chapter3.html"), "chapter3.html"));
         return book;
     }
-
 
     private byte[] writeBookToByteArray(Book book) throws IOException {
         EpubWriter epubWriter = new EpubWriter();

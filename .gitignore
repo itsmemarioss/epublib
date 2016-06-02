@@ -45,3 +45,7 @@ mapping.txt
 # Node.js Stuff
 node_modules/
 bower_components/
+
+# Repo-specific stuff
+/foo.zip
+/epublib-core/foo.zip

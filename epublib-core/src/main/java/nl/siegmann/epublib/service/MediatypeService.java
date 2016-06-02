@@ -56,8 +56,8 @@ public class MediatypeService {
     }
 
     public static boolean isBitmapImage(MediaTypeProperty mediaTypeProperty) {
-        return mediaTypeProperty != null && mediaTypeProperty.equals(JPG) || mediaTypeProperty.equals(PNG) ||
-                mediaTypeProperty.equals(GIF);
+        return mediaTypeProperty != null && (mediaTypeProperty.equals(JPG) || mediaTypeProperty.equals(PNG) ||
+                mediaTypeProperty.equals(GIF));
     }
 
     /**
