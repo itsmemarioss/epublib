@@ -1,9 +1,23 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.2'
+    }
+}
+
 allprojects  {
     apply plugin: 'idea'
     apply plugin: 'maven'
 
     group = 'nl.siegmann.epublib'
     version = '3.1'
+
+    repositories {
+        jcenter()
+    }
 
     idea {
         module {
@@ -25,13 +39,4 @@ subprojects {
     }
 
     artifacts.archives packageSources
-
-    repositories {
-        jcenter()
-        mavenLocal()
-        maven { url "http://repo1.maven.org/maven2/" }
-        maven { url "https://repository.jboss.org/nexus/" }
-        maven { url "http://repo.maven.apache.org/maven2" }
-        maven { url "http://download.java.net/maven/2/" }
-    }
 }

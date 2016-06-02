@@ -1,4 +1,18 @@
+//apply plugin: 'com.github.johnrengelman.shadow'
+
 description = 'epublib-core'
+
+// We'd really like to just have the shadow jar since we need the dependencies included.
+//jar.deleteAllActions()
+//shadowJar {
+//    classifier = ''
+//    manifest {
+//        attributes 'Main-Class': 'TODO',
+//                'Implementation-Title': 'TODO',
+//                'Implementation-Version': TODO
+//    }
+//}
+//jar.dependsOn(shadowJar)
 
 dependencies {
     compile 'net.sf.kxml:kxml2:2.3.0'
@@ -9,3 +23,7 @@ dependencies {
 
     testCompile 'junit:junit:4.10'
 }
+
+//artifacts {
+//    shadowJar
+//}
