@@ -27,8 +27,7 @@ public class ResourceUtil {
         }
         MediaTypeProperty mediaTypeProperty = MediatypeService.determineMediaType(file.getName());
         byte[] data = IOUtil.toByteArray(new FileInputStream(file));
-        Resource result = new Resource(data, mediaTypeProperty);
-        return result;
+        return new Resource(data, mediaTypeProperty);
     }
 
 

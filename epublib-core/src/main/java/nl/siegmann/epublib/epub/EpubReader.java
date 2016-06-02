@@ -193,7 +193,8 @@ public class EpubReader {
                 continue;
             }
             Resource resource = ResourceUtil.createResource(zipEntry, in);
-            if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
+            MediaTypeProperty mediaTypeProperty = resource.getMediaTypeProperty();
+            if (mediaTypeProperty != null && mediaTypeProperty.equals(MediatypeService.XHTML)) {
                 resource.setInputEncoding(defaultHtmlEncoding);
             }
             result.add(resource);

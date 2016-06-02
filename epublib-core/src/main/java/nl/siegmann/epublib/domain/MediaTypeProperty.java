@@ -46,26 +46,21 @@ public class MediaTypeProperty implements Serializable {
         this.extensions = extensions;
     }
 
-
     public String getName() {
         return name;
     }
 
-
     public String getDefaultExtension() {
         return defaultExtension;
     }
-
 
     public Collection<String> getExtensions() {
         return extensions;
     }
 
     public boolean equals(Object otherMediaType) {
-        if (!(otherMediaType instanceof MediaTypeProperty)) {
-            return false;
-        }
-        return name.equals(((MediaTypeProperty) otherMediaType).getName());
+        return otherMediaType != null && otherMediaType instanceof MediaTypeProperty &&
+                name.equals(((MediaTypeProperty) otherMediaType).getName());
     }
 
     public String toString() {

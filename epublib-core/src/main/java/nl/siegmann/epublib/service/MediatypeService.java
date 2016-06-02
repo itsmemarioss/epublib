@@ -56,11 +56,12 @@ public class MediatypeService {
     }
 
     public static boolean isBitmapImage(MediaTypeProperty mediaTypeProperty) {
-        return mediaTypeProperty == JPG || mediaTypeProperty == PNG || mediaTypeProperty == GIF;
+        return mediaTypeProperty != null && mediaTypeProperty.equals(JPG) || mediaTypeProperty.equals(PNG) ||
+                mediaTypeProperty.equals(GIF);
     }
 
     /**
-     * Gets the MediaType based on the file extension. Null of no matching extension found.
+     * Gets the MediaType based on the file extension. Null if no matching extension found.
      * @param filename
      * @return
      */
@@ -68,9 +69,7 @@ public class MediatypeService {
         for (int i = 0; i < mediatypes.length; i++) {
             MediaTypeProperty mediatype = mediatypes[i];
             for (String extension : mediatype.getExtensions()) {
-                if (StringUtil.endsWithIgnoreCase(filename, extension)) {
-                    return mediatype;
-                }
+                if (StringUtil.endsWithIgnoreCase(filename, extension)) return mediatype;
             }
         }
         return null;
@@ -82,8 +81,7 @@ public class MediatypeService {
 
     public static MediaTypeProperty getMediaType(String href, String mediaTypeName) {
         MediaTypeProperty mediaTypeProperty = getMediaTypeByName(mediaTypeName);
-        if (mediaTypeProperty != null)
-            return mediaTypeProperty;
+        if (mediaTypeProperty != null) return mediaTypeProperty;
         String extention = StringUtil.substringAfterLast(href, '.');
         mediaTypeProperty = new MediaTypeProperty(mediaTypeName, extention);
         return mediaTypeProperty;

@@ -292,7 +292,8 @@ public class Resources implements Serializable {
     public static Resource findFirstResourceByMediaType(Collection<Resource> resources, MediaTypeProperty
             mediaTypeProperty) {
         for (Resource resource : resources) {
-            if (resource.getMediaTypeProperty().equals(mediaTypeProperty)) {
+            MediaTypeProperty resourceMtp = resource.getMediaTypeProperty();
+            if (resourceMtp != null && resourceMtp.equals(mediaTypeProperty)) {
                 return resource;
             }
         }
@@ -310,7 +311,8 @@ public class Resources implements Serializable {
             return result;
         }
         for (Resource resource : getAll()) {
-            if (resource.getMediaTypeProperty().equals(mediaTypeProperty)) {
+            MediaTypeProperty rMtp = resource.getMediaTypeProperty();
+            if (rMtp != null && rMtp.equals(mediaTypeProperty)) {
                 result.add(resource);
             }
         }
@@ -319,18 +321,18 @@ public class Resources implements Serializable {
 
     /**
      * All Resources that match any of the given list of MediaTypes
-     * @param mediaTypePropertieses
+     * @param mediaTypeProperties
      * @return
      */
-    public List<Resource> getResourcesByMediaTypes(MediaTypeProperty[] mediaTypePropertieses) {
-        List<Resource> result = new ArrayList<Resource>();
-        if (mediaTypePropertieses == null) {
+    public List<Resource> getResourcesByMediaTypes(MediaTypeProperty[] mediaTypeProperties) {
+        List<Resource> result = new ArrayList<>();
+        if (mediaTypeProperties == null) {
             return result;
         }
 
         // this is the fastest way of doing this according to
         // http://stackoverflow.com/questions/1128723/in-java-how-can-i-test-if-an-array-contains-a-certain-value
-        List<MediaTypeProperty> mediaTypesListProperties = Arrays.asList(mediaTypePropertieses);
+        List<MediaTypeProperty> mediaTypesListProperties = Arrays.asList(mediaTypeProperties);
         for (Resource resource : getAll()) {
             if (mediaTypesListProperties.contains(resource.getMediaTypeProperty())) {
                 result.add(resource);
