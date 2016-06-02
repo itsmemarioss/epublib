@@ -4,9 +4,7 @@ import nl.siegmann.epublib.domain.Resource;
 
 /**
  * The search index for a single resource.
- * 
  * @author paul.siegmann
- *
  */
 // package
 class ResourceSearchIndex {

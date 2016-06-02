@@ -1,29 +1,22 @@
 package nl.siegmann.epublib.bookprocessor;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 import nl.siegmann.epublib.Constants;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.epub.BookProcessor;
 import nl.siegmann.epublib.util.NoCloseWriter;
-
-import org.htmlcleaner.CleanerProperties;
-import org.htmlcleaner.DoctypeToken;
-import org.htmlcleaner.EpublibXmlSerializer;
-import org.htmlcleaner.HtmlCleaner;
-import org.htmlcleaner.TagNode;
+import org.htmlcleaner.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+
 /**
  * Cleans up regular html into xhtml. Uses HtmlCleaner to do this.
- * 
  * @author paul
- * 
  */
 public class HtmlCleanerBookProcessor extends HtmlBookProcessor implements
         BookProcessor {
@@ -69,7 +62,8 @@ public class HtmlCleanerBookProcessor extends HtmlBookProcessor implements
         return out.toByteArray();
     }
 
-    private DoctypeToken createXHTMLDoctypeToken(){
-        return new DoctypeToken("html", "PUBLIC", "-//W3C//DTD XHTML 1.1//EN", "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd");
+    private DoctypeToken createXHTMLDoctypeToken() {
+        return new DoctypeToken("html", "PUBLIC", "-//W3C//DTD XHTML 1.1//EN",
+                "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd");
     }
 }

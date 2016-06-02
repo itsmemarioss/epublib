@@ -1,34 +1,29 @@
 package nl.siegmann.epublib.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-
 import nl.siegmann.epublib.domain.MediaType;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.service.MediatypeService;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.VFS;
-import org.slf4j.Logger;import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
 
 /**
  * Utitilies for making working with apache commons VFS easier.
- * 
  * @author paul
- *
  */
 public class VFSUtil {
 
     private static final Logger log = LoggerFactory.getLogger(VFSUtil.class);
 
-    public static Resource createResource(FileObject rootDir, FileObject file, String inputEncoding) throws IOException {
+    public static Resource createResource(FileObject rootDir, FileObject file, String inputEncoding) throws
+            IOException {
         MediaType mediaType = MediatypeService.determineMediaType(file.getName().getBaseName());
-        if(mediaType == null) {
+        if (mediaType == null) {
             return null;
         }
         String href = calculateHref(rootDir, file);
@@ -67,7 +62,6 @@ public class VFSUtil {
 
     /**
      * First tries to load the inputLocation via VFS; if that doesn't work it tries to load it as a local File
-     *
      * @param inputLocation
      * @return the InputStream referred to by the inputLocation
      * @throws FileSystemException

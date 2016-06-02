@@ -1,32 +1,18 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.Cursor;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
-
 import javax.accessibility.AccessibleContext;
-import javax.swing.Action;
-import javax.swing.JEditorPane;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Caret;
-import javax.swing.text.Document;
-import javax.swing.text.Element;
-import javax.swing.text.MutableAttributeSet;
-import javax.swing.text.ViewFactory;
+import javax.swing.*;
+import javax.swing.text.*;
+import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
-import javax.swing.text.html.HTML.Tag;
-import javax.swing.text.html.HTMLEditorKit.Parser;
+import java.awt.*;
+import java.io.*;
 
 /**
  * Wraps a HTMLEditorKit so we can make getParser() public.
- * 
  * @author paul.siegmann
- *
  */
 class MyHtmlEditorKit extends HTMLEditorKit {
     private HTMLEditorKit htmlEditorKit;
@@ -38,6 +24,7 @@ class MyHtmlEditorKit extends HTMLEditorKit {
     public Parser getParser() {
         return super.getParser();
     }
+
     public int hashCode() {
         return htmlEditorKit.hashCode();
     }
@@ -82,7 +69,7 @@ class MyHtmlEditorKit extends HTMLEditorKit {
     }
 
     public void insertHTML(HTMLDocument doc, int offset, String html,
-            int popDepth, int pushDepth, Tag insertTag)
+                           int popDepth, int pushDepth, Tag insertTag)
             throws BadLocationException, IOException {
         htmlEditorKit.insertHTML(doc, offset, html, popDepth, pushDepth,
                 insertTag);

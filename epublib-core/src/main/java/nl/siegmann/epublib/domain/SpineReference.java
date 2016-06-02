@@ -34,10 +34,8 @@ public class SpineReference extends ResourceReference implements Serializable {
      * <p>
      * It's an optional property that readers may also ignore.
      * <p>
-     * <blockquote>primary or auxiliary is useful for Reading Systems which opt to present auxiliary content
-     * differently
-     * than primary content. For example, a Reading System might opt to render auxiliary content in a popup window
-     * apart
+     * <blockquote>primary or auxiliary is useful for Reading Systems which opt to present auxiliary content differently
+     * than primary content. For example, a Reading System might opt to render auxiliary content in a popup window apart
      * from the main window which presents the primary content. (For an example of the types of content that may be
      * considered auxiliary, refer to the example below and the subsequent discussion.)</blockquote>
      * @return whether the section is Primary or Auxiliary.

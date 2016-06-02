@@ -1,30 +1,5 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Event;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
-
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import nl.siegmann.epublib.browsersupport.NavigationHistory;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
@@ -32,10 +7,18 @@ import nl.siegmann.epublib.epub.BookProcessor;
 import nl.siegmann.epublib.epub.BookProcessorPipeline;
 import nl.siegmann.epublib.epub.EpubReader;
 import nl.siegmann.epublib.epub.EpubWriter;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.*;
+import java.util.Collections;
 
 
 public class Viewer {
@@ -108,7 +91,8 @@ public class Viewer {
         result.pack();
         setLayout(Layout.TocContentMeta);
         result.setVisible(true);
-        return result;    }
+        return result;
+    }
 
 
     private void gotoBook(Book book) {
@@ -123,7 +107,7 @@ public class Viewer {
     private static JFileChooser createFileChooser(File startDir) {
         if (startDir == null) {
             startDir = new File(System.getProperty("user.home"));
-            if (! startDir.exists()) {
+            if (!startDir.exists()) {
                 startDir = null;
             }
         }
@@ -147,14 +131,14 @@ public class Viewer {
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fileChooser = createFileChooser(previousDir);
                 int returnVal = fileChooser.showOpenDialog(mainWindow);
-                if(returnVal != JFileChooser.APPROVE_OPTION) {
+                if (returnVal != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
                 File selectedFile = fileChooser.getSelectedFile();
                 if (selectedFile == null) {
                     return;
                 }
-                if (! selectedFile.isDirectory()) {
+                if (!selectedFile.isDirectory()) {
                     previousDir = selectedFile.getParentFile();
                 }
                 try {
@@ -179,14 +163,14 @@ public class Viewer {
                 }
                 JFileChooser fileChooser = createFileChooser(previousDir);
                 int returnVal = fileChooser.showOpenDialog(mainWindow);
-                if(returnVal != JFileChooser.APPROVE_OPTION) {
+                if (returnVal != JFileChooser.APPROVE_OPTION) {
                     return;
                 }
                 File selectedFile = fileChooser.getSelectedFile();
                 if (selectedFile == null) {
                     return;
                 }
-                if (! selectedFile.isDirectory()) {
+                if (!selectedFile.isDirectory()) {
                     previousDir = selectedFile.getParentFile();
                 }
                 try {
@@ -221,7 +205,8 @@ public class Viewer {
         JMenu viewMenu = new JMenu(getText("View"));
         menuBar.add(viewMenu);
 
-        JMenuItem viewTocContentMenuItem = new JMenuItem(getText("TOCContent"), ViewerUtil.createImageIcon("layout-toc-content"));
+        JMenuItem viewTocContentMenuItem = new JMenuItem(getText("TOCContent"),
+                ViewerUtil.createImageIcon("layout-toc-content"));
         viewTocContentMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2, Event.CTRL_MASK));
         viewTocContentMenuItem.addActionListener(new ActionListener() {
 
@@ -241,7 +226,8 @@ public class Viewer {
         });
         viewMenu.add(viewContentMenuItem);
 
-        JMenuItem viewTocContentMetaMenuItem = new JMenuItem(getText("TocContentMeta"), ViewerUtil.createImageIcon("layout-toc-content-meta"));
+        JMenuItem viewTocContentMetaMenuItem = new JMenuItem(getText("TocContentMeta"),
+                ViewerUtil.createImageIcon("layout-toc-content-meta"));
         viewTocContentMetaMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_3, Event.CTRL_MASK));
         viewTocContentMetaMenuItem.addActionListener(new ActionListener() {
 
@@ -277,6 +263,7 @@ public class Viewer {
         private boolean metaPaneVisible;
 
     }
+
     private void setLayout(Layout layout) {
         switch (layout) {
             case Content:
@@ -297,7 +284,8 @@ public class Viewer {
     private static InputStream getBookInputStream(String[] args) {
         // jquery-fundamentals-book.epub
 //        final Book book = (new EpubReader()).readEpub(new FileInputStream("/home/paul/test2_book1.epub"));
-//        final Book book = (new EpubReader()).readEpub(new FileInputStream("/home/paul/three_men_in_a_boat_jerome_k_jerome.epub"));
+//        final Book book = (new EpubReader()).readEpub(new FileInputStream
+// ("/home/paul/three_men_in_a_boat_jerome_k_jerome.epub"));
 
 //        String bookFile = "/home/paul/test2_book1.epub";
 //        bookFile = "/home/paul/project/private/library/epub/this_dynamic_earth-AAH813.epub";
@@ -307,7 +295,7 @@ public class Viewer {
             bookFile = args[0];
         }
         InputStream result = null;
-        if (! StringUtils.isBlank(bookFile)) {
+        if (!StringUtils.isBlank(bookFile)) {
             try {
                 result = new FileInputStream(bookFile);
             } catch (Exception e) {

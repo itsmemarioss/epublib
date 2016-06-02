@@ -80,10 +80,8 @@ public class TableOfContents implements Serializable {
      * Adds the given Resources to the TableOfContents at the location specified by the pathElements.
      * <p>
      * Example: Calling this method with a Resource and new String[] {"chapter1", "paragraph1"} will result in the
-     * following: <ul> <li>a TOCReference with the title "chapter1" at the root level.<br/> If this TOCReference did
-     * not
-     * yet exist it will have been created and does not point to any resource</li> <li>A TOCReference that has the
-     * title
+     * following: <ul> <li>a TOCReference with the title "chapter1" at the root level.<br/> If this TOCReference did not
+     * yet exist it will have been created and does not point to any resource</li> <li>A TOCReference that has the title
      * "paragraph1". This TOCReference will be the child of TOCReference "chapter1" and will point to the given
      * Resource</li> </ul>
      * @param resource
@@ -114,8 +112,7 @@ public class TableOfContents implements Serializable {
      * <p>
      * Example: Calling this method with a Resource and new int[] {0, 0} will result in the following: <ul> <li>a
      * TOCReference at the root level.<br/> If this TOCReference did not yet exist it will have been created with a
-     * title of "" and does not point to any resource</li> <li>A TOCReference that points to the given resource and
-     * is a
+     * title of "" and does not point to any resource</li> <li>A TOCReference that points to the given resource and is a
      * child of the previously created TOCReference.<br/> If this TOCReference didn't exist yet it will be created and
      * have a title of ""</li> </ul>
      * @param resource

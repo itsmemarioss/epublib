@@ -30,8 +30,7 @@ public enum Relator {
     ANALYST("anl", "Analyst"),
 
     /**
-     * Use for a person or organization who draws the two-dimensional figures, manipulates the three dimensional
-     * objects
+     * Use for a person or organization who draws the two-dimensional figures, manipulates the three dimensional objects
      * and/or also programs the computer to move objects and images for the purpose of animated film processing.
      * Animation cameras, stands, celluloid screens, transparencies and inks are some of the tools of the animator.
      */
@@ -43,8 +42,7 @@ public enum Relator {
     ANNOTATOR("ann", "Annotator"),
 
     /**
-     * Use for a person or organization responsible for the submission of an application or who is named as eligible
-     * for
+     * Use for a person or organization responsible for the submission of an application or who is named as eligible for
      * the results of the processing of the application (e.g., bestowing of rights, reward, title, position).
      */
     APPLICANT("app", "Applicant"),
@@ -84,8 +82,7 @@ public enum Relator {
     ASSIGNEE("asg", "Assignee"),
 
     /**
-     * Use for a person or organization associated with or found in an item or collection, which cannot be
-     * determined to
+     * Use for a person or organization associated with or found in an item or collection, which cannot be determined to
      * be that of a Former owner [fmo] or other designated relator indicative of provenance.
      */
     ASSOCIATED_NAME("asn", "Associated name"),
@@ -150,8 +147,7 @@ public enum Relator {
     BINDER("bnd", "Binder"),
 
     /**
-     * Use for a person or organization responsible for the binding design of a book, including the type of binding,
-     * the
+     * Use for a person or organization responsible for the binding design of a book, including the type of binding, the
      * type of materials used, and any decorative aspects of the binding.
      */
     BINDING_DESIGNER("bdd", "Binding designer"),
@@ -170,8 +166,7 @@ public enum Relator {
     BOOK_DESIGNER("bkd", "Book designer"),
 
     /**
-     * Use for a person or organization responsible for the production of books and other print media, if specific
-     * codes
+     * Use for a person or organization responsible for the production of books and other print media, if specific codes
      * (e.g., [bkd], [egr], [tyd], [prt]) are not desired.
      */
     BOOK_PRODUCER("bkp", "Book producer"),
@@ -235,15 +230,13 @@ public enum Relator {
 
     /**
      * Use for a person or organization who has brought together material from various sources that has been arranged,
-     * described, and cataloged as a collection. A collector is neither the creator of the material nor a person to
-     * whom
+     * described, and cataloged as a collection. A collector is neither the creator of the material nor a person to whom
      * manuscripts in the collection may have been addressed.
      */
     COLLECTOR("col", "Collector"),
 
     /**
-     * Use for a person or organization responsible for the production of photographic prints from film or other
-     * colloid
+     * Use for a person or organization responsible for the production of photographic prints from film or other colloid
      * that has ink-receptive and ink-repellent surfaces.
      */
     COLLOTYPER("clt", "Collotyper"),
@@ -261,8 +254,7 @@ public enum Relator {
     COMMENTATOR("cmm", "Commentator"),
 
     /**
-     * Use for a person or organization responsible for the commentary or explanatory notes about a text. For the
-     * writer
+     * Use for a person or organization responsible for the commentary or explanatory notes about a text. For the writer
      * of manuscript annotations in a printed book, use Annotator [ann].
      */
     COMMENTATOR_FOR_WRITTEN_TEXT("cwt", "Commentator for written text"),
@@ -430,8 +422,7 @@ public enum Relator {
     CURATOR_OF_AN_EXHIBITION("cur", "Curator of an exhibition"),
 
     /**
-     * Use for a person or organization who principally exhibits dancing skills in a musical or dramatic
-     * presentation or
+     * Use for a person or organization who principally exhibits dancing skills in a musical or dramatic presentation or
      * entertainment.
      */
     DANCER("dnc", "Dancer"),
@@ -650,8 +641,7 @@ public enum Relator {
     ILLUMINATOR("ilu", "Illuminator"),
 
     /**
-     * Use for a person or organization who conceives, and perhaps also implements, a design or illustration,
-     * usually to
+     * Use for a person or organization who conceives, and perhaps also implements, a design or illustration, usually to
      * accompany a written text.
      */
     ILLUSTRATOR("ill", "Illustrator"),
@@ -702,8 +692,7 @@ public enum Relator {
     LANDSCAPE_ARCHITECT("lsa", "Landscape architect"),
 
     /**
-     * Use to indicate that a person or organization takes primary responsibility for a particular activity or
-     * endeavor.
+     * Use to indicate that a person or organization takes primary responsibility for a particular activity or endeavor.
      * Use with another relator term or code to show the greater importance this person or organization has regarding
      * that particular role. If more than one relator is assigned to a heading, use the Lead relator only if it applies
      * to all the relators.
@@ -806,8 +795,9 @@ public enum Relator {
     METADATA_CONTACT("mdc", "Metadata contact"),
 
     /**
-     * Use for a person or organization responsible for decorations, illustrations, letters, etc. cut on a metal surface
-     *
+     * Use for a person or organization responsible for decorations, illustrations, letters, etc. cut on a metal
+     * surface
+     * <p>
      * for printing or decoration.
      */
     METAL_ENGRAVER("mte", "Metal-engraver"),
@@ -830,8 +820,7 @@ public enum Relator {
     MUSIC_COPYIST("mcp", "Music copyist"),
 
     /**
-     * Use for a person responsible for basic music decisions about a production, including coordinating the work of
-     * the
+     * Use for a person responsible for basic music decisions about a production, including coordinating the work of the
      * composer, the sound editor, and sound mixers, selecting musicians, and organizing and/or conducting sound for
      * rehearsals and performances.
      */
@@ -867,8 +856,7 @@ public enum Relator {
     ORIGINATOR("org", "Originator"),
 
     /**
-     * Use for relator codes from other lists which have no equivalent in the MARC list or for terms which have not
-     * been
+     * Use for relator codes from other lists which have no equivalent in the MARC list or for terms which have not been
      * assigned a code.
      */
     OTHER("oth", "Other"),
@@ -896,16 +884,14 @@ public enum Relator {
 
     /**
      * Use for a person or organization responsible for commissioning a work. Usually a patron uses his or her means or
-     * influence to support the work of artists, writers, etc. This includes those who commission and pay for
-     * individual
+     * influence to support the work of artists, writers, etc. This includes those who commission and pay for individual
      * works.
      */
     PATRON("pat", "Patron"),
 
     /**
      * Use for a person or organization who exhibits musical or acting skills in a musical or dramatic presentation or
-     * entertainment, if specific codes for those functions ([act], [dnc], [itr], [voc], etc.) are not used. If
-     * specific
+     * entertainment, if specific codes for those functions ([act], [dnc], [itr], [voc], etc.) are not used. If specific
      * codes are used, [prf] is used for a person whose principal skill is not known or specified.
      */
     PERFORMER("prf", "Performer"),
@@ -916,8 +902,7 @@ public enum Relator {
     PERMITTING_AGENCY("pma", "Permitting agency"),
 
     /**
-     * Use for a person or organization responsible for taking photographs, whether they are used in their original
-     * form
+     * Use for a person or organization responsible for taking photographs, whether they are used in their original form
      * or as reproductions.
      */
     PHOTOGRAPHER("pht", "Photographer"),
@@ -1156,8 +1141,7 @@ public enum Relator {
     SET_DESIGNER("std", "Set designer"),
 
     /**
-     * Use for a person whose signature appears without a presentation or other statement indicative of provenance.
-     * When
+     * Use for a person whose signature appears without a presentation or other statement indicative of provenance. When
      * there is a presentation statement, use Inscriber [ins].
      */
     SIGNER("sgn", "Signer"),
@@ -1232,8 +1216,7 @@ public enum Relator {
     TECHNICAL_DIRECTOR("tcd", "Technical director"),
 
     /**
-     * Use for a person under whose supervision a degree candidate develops and presents a thesis, mémoire, or text
-     * of a
+     * Use for a person under whose supervision a degree candidate develops and presents a thesis, mémoire, or text of a
      * dissertation.
      */
     THESIS_ADVISOR("ths", "Thesis advisor"),
@@ -1256,8 +1239,7 @@ public enum Relator {
     TYPE_DESIGNER("tyd", "Type designer"),
 
     /**
-     * Use for a person or organization primarily responsible for choice and arrangement of type used in an item. If
-     * the
+     * Use for a person or organization primarily responsible for choice and arrangement of type used in an item. If the
      * typographer is also responsible for other aspects of the graphic design of a book (e.g., Book designer [bkd]),
      * codes for both functions may be needed.
      */

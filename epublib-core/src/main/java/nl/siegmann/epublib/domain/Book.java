@@ -61,9 +61,9 @@ import java.util.Map;
  * <p>
  * <path id="path2985" stroke-linejoin="miter" d="m191.18,417.24c-34.136,16.047-57.505,49.066-54.479,77.983,4.5927,43
  * .891,50.795,88.762,106.42,108.46,73.691,26.093,175.45,22.576,247.06-6.2745,42.755-17.226,76.324-53.121,79.818-87
- * .843,3.8921-38.675-21.416-85.828-68.415-105.77-88.899-37.721-224.06-27.142-310.4,13.445z"
- * stroke-dashoffset="0" stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="1.49193191,
- * 2.98386382" stroke-width="0.74596596" fill="none"/>
+ * .843,3.8921-38.675-21.416-85.828-68.415-105.77-88.899-37.721-224.06-27.142-310.4,13.445z" stroke-dashoffset="0"
+ * stroke="#000" stroke-linecap="butt" stroke-miterlimit="4" stroke-dasharray="1.49193191, 2.98386382"
+ * stroke-width="0.74596596" fill="none"/>
  * <p>
  * <g id="g3879" stroke="#000" fill="none" transform="matrix(0.50688602,0,0,0.50688602,141.59593,389.57252)">
  * <p>
@@ -262,8 +262,7 @@ import java.util.Map;
  * <rect id="rect4369" height="18.929" width="3.5714" y="296.65" x="476.43" fill="#520"/>
  * <p>
  * <path id="path4371" d="m490,292.01c0,4.1421-5.3566,7.5-11.964,7.5-6.6077,0-11.964-3.3579-11.964-7.5s5.3566-7.5,11
- * .964-7.5c6.6077,0,11.964,3.3579,11.964,7.5z"
- * transform="matrix(1,0,0,1.2619048,0,-78.441795)" fill="#008000"/>
+ * .964-7.5c6.6077,0,11.964,3.3579,11.964,7.5z" transform="matrix(1,0,0,1.2619048,0,-78.441795)" fill="#008000"/>
  * <p>
  * <rect id="rect3759-8-0" stroke-dashoffset="0" transform="matrix(0,1,-1,0,0,0)" height="65.034" width="44.775"
  * stroke="#000" stroke-dasharray="none" stroke-miterlimit="4" y="-525.55" x="275.43" stroke-width="0.46356"
@@ -283,8 +282,7 @@ import java.util.Map;
  * <rect id="rect4369-7" height="18.929" width="3.5714" y="296.65" x="476.43" fill="#520"/>
  * <p>
  * <path id="path4371-9" d="m490,292.01c0,4.1421-5.3566,7.5-11.964,7.5-6.6077,0-11.964-3.3579-11.964-7.5s5.3566-7.5,
- * 11.964-7.5c6.6077,0,11.964,3.3579,11.964,7.5z"
- * transform="matrix(1,0,0,1.2619048,0,-78.441795)" fill="#008000"/>
+ * 11.964-7.5c6.6077,0,11.964,3.3579,11.964,7.5z" transform="matrix(1,0,0,1.2619048,0,-78.441795)" fill="#008000"/>
  * <p>
  * <rect id="rect3759-8-0-4" stroke-dashoffset="0" transform="matrix(0,1,-1,0,0,0)" height="65.034" width="44.775"
  * stroke="#000" stroke-dasharray="none" stroke-miterlimit="4" y="-525.55" x="275.43" stroke-width="0.46356"
@@ -596,8 +594,7 @@ public class Book implements Serializable {
      * All Resources of the Book that can be reached via the Spine, the TableOfContents or the Guide.
      * <p/>
      * Consists of a list of "reachable" resources: <ul> <li>The coverpage</li> <li>The resources of the Spine that are
-     * not already in the result</li> <li>The resources of the Table of Contents that are not already in the
-     * result</li>
+     * not already in the result</li> <li>The resources of the Table of Contents that are not already in the result</li>
      * <li>The resources of the Guide that are not already in the result</li> </ul> To get all html files that make up
      * the epub file use {@link #getResources()}
      * @return All Resources of the Book that can be reached via the Spine, the TableOfContents or the Guide.

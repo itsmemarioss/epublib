@@ -1,5 +1,19 @@
 package nl.siegmann.epublib.viewer;
 
+import nl.siegmann.epublib.browsersupport.NavigationEvent;
+import nl.siegmann.epublib.browsersupport.NavigationEventListener;
+import nl.siegmann.epublib.browsersupport.Navigator;
+import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.service.MediatypeService;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.swing.text.EditorKit;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.HTMLEditorKit.Parser;
 import java.io.Reader;
 import java.io.StringReader;
 import java.util.HashMap;
@@ -7,30 +21,11 @@ import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import javax.swing.text.EditorKit;
-import javax.swing.text.html.HTMLDocument;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.HTMLEditorKit.Parser;
-
-
-import nl.siegmann.epublib.browsersupport.NavigationEvent;
-import nl.siegmann.epublib.browsersupport.NavigationEventListener;
-import nl.siegmann.epublib.browsersupport.Navigator;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.service.MediatypeService;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Creates swing HTML documents from resources.
- * 
+ * <p>
  * Between books the init(Book) function needs to be called in order for images to appear correctly.
- * 
  * @author paul.siegmann
- *
  */
 public class HTMLDocumentFactory implements NavigationEventListener {
 
@@ -77,12 +72,9 @@ public class HTMLDocumentFactory implements NavigationEventListener {
 
 
     /**
-     * Get the HTMLDocument representation of the resource.
-     * If the resource is not an XHTML resource then it returns null.
-     * It first tries to get the document from the cache.
-     * If the document is not in the cache it creates a document from
-     * the resource and adds it to the cache.
-     *
+     * Get the HTMLDocument representation of the resource. If the resource is not an XHTML resource then it returns
+     * null. It first tries to get the document from the cache. If the document is not in the cache it creates a
+     * document from the resource and adds it to the cache.
      * @param resource
      * @return the HTMLDocument representation of the resource.
      */
@@ -118,9 +110,7 @@ public class HTMLDocumentFactory implements NavigationEventListener {
     }
 
     /**
-     * Quick and dirty stripper of all &lt;?...&gt; and &lt;!...&gt; tags as
-     * these confuse the html viewer.
-     *
+     * Quick and dirty stripper of all &lt;?...&gt; and &lt;!...&gt; tags as these confuse the html viewer.
      * @param input
      * @return the input stripped of control characters
      */
@@ -146,15 +136,14 @@ public class HTMLDocumentFactory implements NavigationEventListener {
 
     /**
      * Creates a swing HTMLDocument from the given resource.
-     *
+     * <p>
      * If the resources is not of type XHTML then null is returned.
-     *
      * @param resource
      * @return a swing HTMLDocument created from the given resource.
      */
     private HTMLDocument createDocument(Resource resource) {
         HTMLDocument result = null;
-        if (resource.getMediaType() != MediatypeService.XHTML) {
+        if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
             return result;
         }
         try {
@@ -193,6 +182,7 @@ public class HTMLDocumentFactory implements NavigationEventListener {
         public DocumentIndexer(Book book) {
             this.book = book;
         }
+
         @Override
         public void run() {
             try {
@@ -204,7 +194,7 @@ public class HTMLDocumentFactory implements NavigationEventListener {
         }
 
         private void addAllDocumentsToCache(Book book) {
-            for (Resource resource: book.getResources().getAll()) {
+            for (Resource resource : book.getResources().getAll()) {
                 getDocument(resource);
             }
         }

@@ -70,10 +70,8 @@ public class NavigationHistory implements NavigationEventListener {
     }
 
     /**
-     * If the time between a navigation event is less than the historyWaitTime then the new location is not added to
-     * the
-     * history. When a user is rapidly viewing many pages using the slider we do not want all of them to be added to
-     * the
+     * If the time between a navigation event is less than the historyWaitTime then the new location is not added to the
+     * history. When a user is rapidly viewing many pages using the slider we do not want all of them to be added to the
      * history.
      * @return the time we wait before adding the page to the history
      */
@@ -93,8 +91,7 @@ public class NavigationHistory implements NavigationEventListener {
     }
 
     /**
-     * Adds the location after the current position. If the currentposition is not the end of the list then the
-     * elements
+     * Adds the location after the current position. If the currentposition is not the end of the list then the elements
      * between the current element and the end of the list will be discarded. Does nothing if the new location matches
      * the current location. <br/> If this nr of locations becomes larger then the historySize then the first item(s)
      * will be removed.
@@ -170,7 +167,8 @@ public class NavigationHistory implements NavigationEventListener {
         }
 
         if ((System.currentTimeMillis() - this.lastUpdateTime) > historyWaitTime) {
-            // if the user scrolled rapidly through the pages then the last page will not be added to the history. We fix that here:
+            // if the user scrolled rapidly through the pages then the last page will not be added to the history. We
+            // fix that here:
             addLocation(navigationEvent.getOldResource());
 
             addLocation(navigationEvent.getCurrentResource().getHref());

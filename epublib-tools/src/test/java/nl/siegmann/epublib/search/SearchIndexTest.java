@@ -1,13 +1,13 @@
 package nl.siegmann.epublib.search;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.List;
-
 import junit.framework.TestCase;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.service.MediatypeService;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
 
 public class SearchIndexTest extends TestCase {
 
@@ -43,7 +43,7 @@ public class SearchIndexTest extends TestCase {
                 "\ta", "a",
                 "\u00a0a", "a"
         };
-        for (int i = 0; i < testData.length; i+= 2) {
+        for (int i = 0; i < testData.length; i += 2) {
             String actualText = SearchIndex.unicodeTrim(testData[i]);
             assertEquals((i / 2) + ": ", testData[i + 1], actualText);
         }
@@ -52,8 +52,8 @@ public class SearchIndexTest extends TestCase {
     public void testInContent() {
         Object[] testData = new Object[] {
                 "a", "a", new Integer[] {0},
-                "a", "aa", new Integer[] {0,1},
-                "a", "a   \n\t\t\ta", new Integer[] {0,2},
+                "a", "aa", new Integer[] {0, 1},
+                "a", "a   \n\t\t\ta", new Integer[] {0, 2},
                 "a", "\u00c3\u00a4", new Integer[] {0}, // ä
                 "a", "A", new Integer[] {0},
                 // &auml;&nbsp;
@@ -63,7 +63,7 @@ public class SearchIndexTest extends TestCase {
                 "XXX", "<html><title>my title1</title><body><h1>wrong title</h1></body></html>", new Integer[] {},
                 "title", "<html><title>my title1</title><body><h1>wrong title</h1></body></html>", new Integer[] {3, 15}
         };
-        for (int i = 0; i < testData.length; i+= 3) {
+        for (int i = 0; i < testData.length; i += 3) {
             Resource resource = new Resource(((String) testData[i + 1]).getBytes(), MediatypeService.XHTML);
             String content = SearchIndex.getSearchContent(new StringReader((String) testData[i + 1]));
             String searchTerm = (String) testData[i];
@@ -72,7 +72,8 @@ public class SearchIndexTest extends TestCase {
             assertEquals("test " + ((i / 3) + 1), expectedResult.length, actualResult.size());
             for (int j = 0; j < expectedResult.length; j++) {
                 SearchResult searchResult = actualResult.get(j);
-                assertEquals("test " + (i / 3) + ", match " + j, expectedResult[j].intValue(), searchResult.getPagePos());
+                assertEquals("test " + (i / 3) + ", match " + j, expectedResult[j].intValue(),
+                        searchResult.getPagePos());
             }
         }
     }
@@ -92,9 +93,11 @@ public class SearchIndexTest extends TestCase {
                 "\u00c4\u00a0", "a",
                 "", ""
         };
-        for (int i = 0; i < testData.length; i+= 2) {
+        for (int i = 0; i < testData.length; i += 2) {
             String actualText = SearchIndex.cleanText(testData[i]);
-            assertEquals((i / 2) + ": '" + testData[i] + "' => '" + actualText + "' does not match '" + testData[i + 1] + "\'", testData[i + 1], actualText);
+            assertEquals(
+                    (i / 2) + ": '" + testData[i] + "' => '" + actualText + "' does not match '" + testData[i + 1] +
+                            "\'", testData[i + 1], actualText);
         }
     }
 }

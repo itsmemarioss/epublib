@@ -1,18 +1,5 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToolBar;
-
 import nl.siegmann.epublib.browsersupport.NavigationEvent;
 import nl.siegmann.epublib.browsersupport.NavigationEventListener;
 import nl.siegmann.epublib.browsersupport.NavigationHistory;
@@ -23,11 +10,16 @@ import nl.siegmann.epublib.search.SearchResult;
 import nl.siegmann.epublib.search.SearchResults;
 import nl.siegmann.epublib.util.ToolsResourceUtil;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
 /**
  * A toolbar that contains the history back and forward buttons and the page title.
- * 
  * @author paul.siegmann
- *
  */
 public class NavigationBar extends JToolBar implements NavigationEventListener {
 
@@ -103,7 +95,7 @@ public class NavigationBar extends JToolBar implements NavigationEventListener {
         } else if (searchResultIndex >= searchResults.size()) {
             searchResultIndex = 0;
         }
-        if (! searchResults.isEmpty()) {
+        if (!searchResults.isEmpty()) {
             SearchResult searchResult = searchResults.getHits().get(searchResultIndex);
             navigator.gotoResource(searchResult.getResource(), searchResult.getPagePos(), NavigationBar.this);
         }

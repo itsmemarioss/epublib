@@ -1,16 +1,15 @@
 package nl.siegmann.epublib.utilities;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.List;
+import junit.framework.TestCase;
+import nl.siegmann.epublib.Constants;
 
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.events.XMLEvent;
-
-import junit.framework.TestCase;
-import nl.siegmann.epublib.Constants;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.util.List;
 
 public class HtmlSplitterTest extends TestCase {
 
@@ -18,14 +17,15 @@ public class HtmlSplitterTest extends TestCase {
         HtmlSplitter htmlSplitter = new HtmlSplitter();
         try {
             String bookResourceName = "/holmes_scandal_bohemia.html";
-            Reader input = new InputStreamReader(HtmlSplitterTest.class.getResourceAsStream(bookResourceName), Constants.CHARACTER_ENCODING);
+            Reader input = new InputStreamReader(HtmlSplitterTest.class.getResourceAsStream(bookResourceName),
+                    Constants.CHARACTER_ENCODING);
             int maxSize = 3000;
             List<List<XMLEvent>> result = htmlSplitter.splitHtml(input, maxSize);
             XMLOutputFactory xmlOutputFactory = XMLOutputFactory.newInstance();
-            for(int i = 0; i < result.size(); i++) {
+            for (int i = 0; i < result.size(); i++) {
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
                 XMLEventWriter writer = xmlOutputFactory.createXMLEventWriter(out);
-                for(XMLEvent xmlEvent: result.get(i)) {
+                for (XMLEvent xmlEvent : result.get(i)) {
                     writer.add(xmlEvent);
                 }
                 writer.close();

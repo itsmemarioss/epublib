@@ -1,16 +1,12 @@
 package nl.siegmann.epublib.viewer;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
-
 import javax.swing.text.BadLocationException;
 import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.html.HTML;
-import javax.swing.text.html.HTML.Attribute;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
+import java.util.ArrayList;
+import java.util.List;
 
 class MyParserCallback extends ParserCallback {
     private ParserCallback parserCallback;

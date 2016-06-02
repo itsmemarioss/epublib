@@ -1,31 +1,23 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableModel;
-
 import nl.siegmann.epublib.browsersupport.NavigationEvent;
 import nl.siegmann.epublib.browsersupport.NavigationEventListener;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Metadata;
 import nl.siegmann.epublib.domain.Resource;
-
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
+import java.awt.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MetadataPane extends JPanel implements NavigationEventListener {
 
@@ -106,12 +98,12 @@ public class MetadataPane extends JPanel implements NavigationEventListener {
                 continue;
             }
             String valueString = String.valueOf(value);
-            if (StringUtils.isBlank(valueString))  {
+            if (StringUtils.isBlank(valueString)) {
                 continue;
             }
 
             String currentLabel = "";
-            if (! labelWritten) {
+            if (!labelWritten) {
                 currentLabel = label;
                 labelWritten = true;
             }

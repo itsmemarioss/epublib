@@ -1,19 +1,17 @@
 package nl.siegmann.epublib.bookprocessor;
 
-import java.io.IOException;
-import java.util.List;
-
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.TOCReference;
 import nl.siegmann.epublib.epub.BookProcessor;
-
 import org.apache.commons.lang.StringUtils;
 import org.xml.sax.InputSource;
+
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.IOException;
+import java.util.List;
 
 public class SectionTitleBookProcessor implements BookProcessor {
 
@@ -25,8 +23,8 @@ public class SectionTitleBookProcessor implements BookProcessor {
     }
 
     private void processSections(List<TOCReference> tocReferences, Book book, XPath xpath) {
-        for(TOCReference tocReference: tocReferences) {
-            if(! StringUtils.isBlank(tocReference.getTitle())) {
+        for (TOCReference tocReference : tocReferences) {
+            if (!StringUtils.isBlank(tocReference.getTitle())) {
                 continue;
             }
             try {
@@ -43,9 +41,10 @@ public class SectionTitleBookProcessor implements BookProcessor {
     }
 
 
-    private String getTitle(TOCReference tocReference, Book book, XPath xpath) throws IOException, XPathExpressionException {
+    private String getTitle(TOCReference tocReference, Book book, XPath xpath) throws IOException,
+            XPathExpressionException {
         Resource resource = tocReference.getResource();
-        if(resource == null) {
+        if (resource == null) {
             return null;
         }
         InputSource inputSource = new InputSource(resource.getInputStream());

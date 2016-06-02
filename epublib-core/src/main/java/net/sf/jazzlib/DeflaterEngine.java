@@ -43,8 +43,7 @@ class DeflaterEngine implements DeflaterConstants {
     private int ins_h;
 
     /**
-     * Hashtable, hashing three characters to an index for window, so that window[index]..window[index+2] have this
-     * hash
+     * Hashtable, hashing three characters to an index for window, so that window[index]..window[index+2] have this hash
      * code. Note that the array should really be unsigned short, so you need to and the values with 0xffff.
      */
     private final short[] head;
@@ -72,8 +71,7 @@ class DeflaterEngine implements DeflaterConstants {
     private int lookahead;
 
     /**
-     * This array contains the part of the uncompressed stream that is of relevance. The current character is
-     * indexed by
+     * This array contains the part of the uncompressed stream that is of relevance. The current character is indexed by
      * strstart.
      */
     private final byte[] window;

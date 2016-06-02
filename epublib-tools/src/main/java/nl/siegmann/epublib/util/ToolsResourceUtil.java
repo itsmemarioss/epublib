@@ -1,37 +1,19 @@
 package nl.siegmann.epublib.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.util.Scanner;
-import java.util.regex.Pattern;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.ParserConfigurationException;
-
-import nl.siegmann.epublib.Constants;
-import nl.siegmann.epublib.domain.MediaType;
 import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.epub.EpubProcessorSupport;
 import nl.siegmann.epublib.service.MediatypeService;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 /**
  * Various resource utility methods
- * 
  * @author paul
- *
  */
 public class ToolsResourceUtil {
 
@@ -53,12 +35,9 @@ public class ToolsResourceUtil {
     }
 
 
-
-
     /**
-     * Retrieves whatever it finds between &lt;title&gt;...&lt;/title&gt; or &lt;h1-7&gt;...&lt;/h1-7&gt;.
-     * The first match is returned, even if it is a blank string.
-     * If it finds nothing null is returned.
+     * Retrieves whatever it finds between &lt;title&gt;...&lt;/title&gt; or &lt;h1-7&gt;...&lt;/h1-7&gt;. The first
+     * match is returned, even if it is a blank string. If it finds nothing null is returned.
      * @param resource
      * @return whatever it finds in the resource between &lt;title&gt;...&lt;/title&gt; or &lt;h1-7&gt;...&lt;/h1-7&gt;.
      */
@@ -75,12 +54,12 @@ public class ToolsResourceUtil {
             Reader content = resource.getReader();
             Scanner scanner = new Scanner(content);
             scanner.useDelimiter("<");
-            while(scanner.hasNext()) {
+            while (scanner.hasNext()) {
                 String text = scanner.next();
                 int closePos = text.indexOf('>');
                 String tag = text.substring(0, closePos);
                 if (tag.equalsIgnoreCase("title")
-                    || h_tag.matcher(tag).find()) {
+                        || h_tag.matcher(tag).find()) {
 
                     title = text.substring(closePos + 1).trim();
                     title = StringEscapeUtils.unescapeHtml(title);

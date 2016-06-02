@@ -1,5 +1,13 @@
 package nl.siegmann.epublib.search;
 
+import nl.siegmann.epublib.domain.Book;
+import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.service.MediatypeService;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.text.Normalizer;
@@ -9,20 +17,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.service.MediatypeService;
-
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * A searchindex for searching through a book.
- * 
  * @author paul.siegmann
- *
  */
 public class SearchIndex {
 
@@ -70,7 +67,7 @@ public class SearchIndex {
 
     private static ResourceSearchIndex createResourceSearchIndex(Resource resource) {
         String searchContent = getSearchContent(resource);
-        if ( StringUtils.isBlank(searchContent)) {
+        if (StringUtils.isBlank(searchContent)) {
             return null;
         }
         ResourceSearchIndex searchIndex = new ResourceSearchIndex(resource, searchContent);
@@ -86,7 +83,7 @@ public class SearchIndex {
         if (book == null) {
             return result;
         }
-        for (Resource resource: book.getContents()) {
+        for (Resource resource : book.getContents()) {
             ResourceSearchIndex resourceSearchIndex = createResourceSearchIndex(resource);
             if (resourceSearchIndex != null) {
                 result.add(resourceSearchIndex);
@@ -101,7 +98,7 @@ public class SearchIndex {
             return result;
         }
         searchTerm = cleanText(searchTerm);
-        for (ResourceSearchIndex resourceSearchIndex: resourceSearchIndexes) {
+        for (ResourceSearchIndex resourceSearchIndex : resourceSearchIndexes) {
             result.addAll(doSearch(searchTerm, resourceSearchIndex));
         }
         result.setSearchTerm(searchTerm);
@@ -127,7 +124,7 @@ public class SearchIndex {
         StringBuilder result = new StringBuilder();
         Scanner scanner = new Scanner(content);
         scanner.useDelimiter("<");
-        while(scanner.hasNext()) {
+        while (scanner.hasNext()) {
             String text = scanner.next();
             int closePos = text.indexOf('>');
             String chunk = text.substring(closePos + 1).trim();
@@ -140,7 +137,6 @@ public class SearchIndex {
 
     /**
      * Checks whether the given character is a java whitespace or a non-breaking-space (&amp;nbsp;).
-     *
      * @param c
      * @return whether the given character is a java whitespace or a non-breaking-space (&amp;nbsp;).
      */
@@ -152,13 +148,13 @@ public class SearchIndex {
         int leadingWhitespaceCount = 0;
         int trailingWhitespaceCount = 0;
         for (int i = 0; i < text.length(); i++) {
-            if (! isHtmlWhitespace(text.charAt(i))) {
+            if (!isHtmlWhitespace(text.charAt(i))) {
                 break;
             }
             leadingWhitespaceCount++;
         }
         for (int i = (text.length() - 1); i > leadingWhitespaceCount; i--) {
-            if (! isHtmlWhitespace(text.charAt(i))) {
+            if (!isHtmlWhitespace(text.charAt(i))) {
                 break;
             }
             trailingWhitespaceCount++;
@@ -171,11 +167,9 @@ public class SearchIndex {
 
     /**
      * Turns html encoded text into plain text.
-     *
-     * Replaces &amp;ouml; type of expressions into &uml;<br/>
-     * Removes accents<br/>
-     * Replaces multiple whitespaces with a single space.<br/>
-     *
+     * <p>
+     * Replaces &amp;ouml; type of expressions into &uml;<br/> Removes accents<br/> Replaces multiple whitespaces with a
+     * single space.<br/>
      * @param text
      * @return html encoded text turned into plain text.
      */
@@ -205,7 +199,7 @@ public class SearchIndex {
     protected static List<SearchResult> doSearch(String searchTerm, String content, Resource resource) {
         List<SearchResult> result = new ArrayList<SearchResult>();
         int findPos = content.indexOf(searchTerm);
-        while(findPos >= 0) {
+        while (findPos >= 0) {
             SearchResult searchResult = new SearchResult(findPos, searchTerm, resource);
             result.add(searchResult);
             findPos = content.indexOf(searchTerm, findPos + 1);

@@ -1,10 +1,9 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.BorderLayout;
-
-import javax.swing.JPanel;
-
 import nl.siegmann.epublib.browsersupport.Navigator;
+
+import javax.swing.*;
+import java.awt.*;
 
 public class BrowseBar extends JPanel {
 

@@ -1,50 +1,41 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
-
 import nl.siegmann.epublib.browsersupport.NavigationEvent;
 import nl.siegmann.epublib.browsersupport.NavigationEventListener;
 import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.domain.TOCReference;
-
 import org.apache.commons.lang.StringUtils;
+
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.*;
+import java.util.List;
 
 /**
  * Creates a JTree for navigating a Book via its Table of Contents.
- * 
  * @author paul
- *
  */
 public class TableOfContentsPane extends JPanel implements NavigationEventListener {
 
     private static final long serialVersionUID = 2277717264176049700L;
 
-    private Map<String, Collection<DefaultMutableTreeNode>> href2treeNode = new HashMap<String, Collection<DefaultMutableTreeNode>>();
+    private Map<String, Collection<DefaultMutableTreeNode>> href2treeNode = new HashMap<String,
+            Collection<DefaultMutableTreeNode>>();
     private JScrollPane scrollPane;
     private Navigator navigator;
     private JTree tree;
 
     /**
-     * Creates a JTree that displays all the items in the table of contents from the book in SectionWalker.
-     * Also sets up a selectionListener that updates the SectionWalker when an item in the tree is selected.
-     *
+     * Creates a JTree that displays all the items in the table of contents from the book in SectionWalker. Also sets up
+     * a selectionListener that updates the SectionWalker when an item in the tree is selected.
      * @param navigator
      */
     public TableOfContentsPane(Navigator navigator) {
@@ -61,7 +52,6 @@ public class TableOfContentsPane extends JPanel implements NavigationEventListen
      * Wrapper around a TOCReference that gives the TOCReference's title when toString() is called
      * .createTableOfContentsTree
      * @author paul
-     *
      */
     private static class TOCItem {
         private TOCReference tocReference;
@@ -108,7 +98,7 @@ public class TableOfContentsPane extends JPanel implements NavigationEventListen
         if (tocReferences == null) {
             return;
         }
-        for (TOCReference tocReference: tocReferences) {
+        for (TOCReference tocReference : tocReferences) {
             TOCItem tocItem = new TOCItem(tocReference);
             DefaultMutableTreeNode treeNode = new DefaultMutableTreeNode(tocItem);
             addToHref2TreeNode(tocReference.getResource(), treeNode);
@@ -133,7 +123,8 @@ public class TableOfContentsPane extends JPanel implements NavigationEventListen
         if (navigationEvent.getCurrentResource() == null) {
             return;
         }
-        Collection<DefaultMutableTreeNode> treeNodes = href2treeNode.get(navigationEvent.getCurrentResource().getHref());
+        Collection<DefaultMutableTreeNode> treeNodes = href2treeNode.get(
+                navigationEvent.getCurrentResource().getHref());
         if (treeNodes == null || treeNodes.isEmpty()) {
             if (navigationEvent.getCurrentSpinePos() == (navigationEvent.getOldSpinePos() + 1)) {
                 return;
@@ -141,7 +132,7 @@ public class TableOfContentsPane extends JPanel implements NavigationEventListen
             tree.setSelectionPath(null);
             return;
         }
-        for (DefaultMutableTreeNode treeNode: treeNodes) {
+        for (DefaultMutableTreeNode treeNode : treeNodes) {
             TreeNode[] path = treeNode.getPath();
             TreePath treePath = new TreePath(path);
             tree.setSelectionPath(treePath);
@@ -158,7 +149,8 @@ public class TableOfContentsPane extends JPanel implements NavigationEventListen
             public void mouseClicked(MouseEvent me) {
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) tree.getLastSelectedPathComponent();
                 TOCItem tocItem = (TOCItem) node.getUserObject();
-                navigator.gotoResource(tocItem.getTOCReference().getResource(), tocItem.getTOCReference().getFragmentId(), TableOfContentsPane.this);
+                navigator.gotoResource(tocItem.getTOCReference().getResource(),
+                        tocItem.getTOCReference().getFragmentId(), TableOfContentsPane.this);
             }
         });
 

@@ -1,23 +1,15 @@
 package nl.siegmann.epublib.utilities;
 
+import javax.xml.stream.*;
+import javax.xml.stream.events.XMLEvent;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.stream.XMLEventFactory;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.XMLEvent;
-
 /**
  * Splits up a xhtml document into pieces that are all valid xhtml documents.
- * 
  * @author paul
- *
  */
 public class HtmlSplitter {
 
@@ -40,7 +32,7 @@ public class HtmlSplitter {
 
     private static int calculateTotalTagStringLength(List<XMLEvent> xmlEvents) {
         int result = 0;
-        for(XMLEvent xmlEvent: xmlEvents) {
+        for (XMLEvent xmlEvent : xmlEvents) {
             result += xmlEvent.toString().length();
         }
         return result;
@@ -55,11 +47,11 @@ public class HtmlSplitter {
         currentXmlEvents.addAll(headerElements);
         currentXmlEvents.addAll(elementStack);
         out = xmlOutputFactory.createXMLEventWriter(currentDoc);
-        for(XMLEvent headerXmlEvent: headerElements) {
+        for (XMLEvent headerXmlEvent : headerElements) {
             out.add(headerXmlEvent);
         }
         XMLEvent xmlEvent = reader.nextEvent();
-        while(! isBodyEndElement(xmlEvent)) {
+        while (!isBodyEndElement(xmlEvent)) {
             processXmlEvent(xmlEvent, result);
             xmlEvent = reader.nextEvent();
         }
@@ -77,10 +69,10 @@ public class HtmlSplitter {
     private void startNewDocument() throws XMLStreamException {
         currentDoc = new StringWriter();
         out = xmlOutputFactory.createXMLEventWriter(currentDoc);
-        for(XMLEvent headerXmlEvent: headerElements) {
+        for (XMLEvent headerXmlEvent : headerElements) {
             out.add(headerXmlEvent);
         }
-        for(XMLEvent stackXmlEvent: elementStack) {
+        for (XMLEvent stackXmlEvent : elementStack) {
             out.add(stackXmlEvent);
         }
 
@@ -92,7 +84,7 @@ public class HtmlSplitter {
     private void processXmlEvent(XMLEvent xmlEvent, List<List<XMLEvent>> docs) throws XMLStreamException {
         out.flush();
         String currentSerializerDoc = currentDoc.toString();
-        if((currentSerializerDoc.length() + xmlEvent.toString().length() + footerCloseTagLength) >= maxLength) {
+        if ((currentSerializerDoc.length() + xmlEvent.toString().length() + footerCloseTagLength) >= maxLength) {
             closeCurrentDocument();
             startNewDocument();
         }
@@ -102,7 +94,7 @@ public class HtmlSplitter {
     }
 
     private void closeAllTags(List<XMLEvent> xmlEvents) throws XMLStreamException {
-        for(int i = elementStack.size() - 1; i>= 0; i--) {
+        for (int i = elementStack.size() - 1; i >= 0; i--) {
             XMLEvent xmlEvent = elementStack.get(i);
             XMLEvent xmlEndElementEvent = xmlEventFactory.createEndElement(xmlEvent.asStartElement().getName(), null);
             xmlEvents.add(xmlEndElementEvent);
@@ -110,11 +102,11 @@ public class HtmlSplitter {
     }
 
     private void updateStack(XMLEvent xmlEvent) {
-        if(xmlEvent.isStartElement()) {
+        if (xmlEvent.isStartElement()) {
             elementStack.add(xmlEvent);
-        } else if(xmlEvent.isEndElement()) {
+        } else if (xmlEvent.isEndElement()) {
             XMLEvent lastEvent = elementStack.get(elementStack.size() - 1);
-            if(lastEvent.isStartElement() &&
+            if (lastEvent.isStartElement() &&
                     xmlEvent.asEndElement().getName().equals(lastEvent.asStartElement().getName())) {
                 elementStack.remove(elementStack.size() - 1);
             }
@@ -124,13 +116,13 @@ public class HtmlSplitter {
     private List<XMLEvent> getHeaderElements(XMLEventReader reader) throws XMLStreamException {
         List<XMLEvent> result = new ArrayList<XMLEvent>();
         XMLEvent event = reader.nextEvent();
-        while(event != null && (!isBodyStartElement(event))) {
+        while (event != null && (!isBodyStartElement(event))) {
             result.add(event);
             event = reader.nextEvent();
         }
 
         // add the body start tag to the result
-        if(event != null) {
+        if (event != null) {
             result.add(event);
         }
         return result;

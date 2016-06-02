@@ -84,8 +84,7 @@ class StreamManipulator {
     }
 
     /**
-     * Gets the next n bits and increases input pointer. This is equivalent to peekBits followed by dropBits, except
-     * for
+     * Gets the next n bits and increases input pointer. This is equivalent to peekBits followed by dropBits, except for
      * correct error handling.
      * @return the value of the bits, or -1 if not enough bits available.
      */
@@ -98,8 +97,7 @@ class StreamManipulator {
     }
 
     /**
-     * Gets the number of bits available in the bit buffer. This must be only called when a previous peekBits()
-     * returned
+     * Gets the number of bits available in the bit buffer. This must be only called when a previous peekBits() returned
      * -1.
      * @return the number of bits available.
      */

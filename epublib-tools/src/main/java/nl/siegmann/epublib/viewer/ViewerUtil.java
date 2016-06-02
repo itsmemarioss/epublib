@@ -1,22 +1,19 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.Image;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 
 public class ViewerUtil {
 
     private static Logger log = LoggerFactory.getLogger(ViewerUtil.class);
 
     /**
-     * Creates a button with the given icon. The icon will be loaded from the classpath.
-     * If loading the icon is unsuccessful it will use the defaultLabel.
-     *
+     * Creates a button with the given icon. The icon will be loaded from the classpath. If loading the icon is
+     * unsuccessful it will use the defaultLabel.
      * @param iconName
      * @param backupLabel
      * @return a button with the given icon.
@@ -40,7 +37,7 @@ public class ViewerUtil {
         try {
             Image image = ImageIO.read(ViewerUtil.class.getResourceAsStream(fullIconPath));
             result = new ImageIcon(image);
-        } catch(Exception e) {
+        } catch (Exception e) {
             log.error("Icon \'" + fullIconPath + "\' not found");
         }
         return result;

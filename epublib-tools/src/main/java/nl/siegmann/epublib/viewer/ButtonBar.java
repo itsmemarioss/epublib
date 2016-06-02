@@ -1,17 +1,14 @@
 package nl.siegmann.epublib.viewer;
 
-import java.awt.GridLayout;
+import nl.siegmann.epublib.browsersupport.Navigator;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-
-import nl.siegmann.epublib.browsersupport.Navigator;
-
 /**
  * Creates a panel with the first,previous,next and last buttons.
- * 
  */
 class ButtonBar extends JPanel {
     private static final long serialVersionUID = 6431437924245035812L;

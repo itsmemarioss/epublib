@@ -1,10 +1,10 @@
 package nl.siegmann.epublib.bookprocessor;
 
-import java.util.Collection;
-
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.TOCReference;
 import nl.siegmann.epublib.epub.BookProcessor;
+
+import java.util.Collection;
 
 public class FixMissingResourceBookProcessor implements BookProcessor {
 
@@ -14,7 +14,7 @@ public class FixMissingResourceBookProcessor implements BookProcessor {
     }
 
     private void fixMissingResources(Collection<TOCReference> tocReferences, Book book) {
-        for (TOCReference tocReference:  tocReferences) {
+        for (TOCReference tocReference : tocReferences) {
             if (tocReference.getResource() == null) {
 
             }

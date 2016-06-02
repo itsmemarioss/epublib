@@ -197,8 +197,7 @@ public class Deflater {
 
     /**
      * Frees all objects allocated by the compressor. There's no reason to call this, since you can just rely on garbage
-     * collection. Exists only for compatibility against Sun's JDK, where the compressor allocates native memory. If
-     * you
+     * collection. Exists only for compatibility against Sun's JDK, where the compressor allocates native memory. If you
      * call any method (even reset) afterwards the behaviour is <i>undefined</i>.
      * @deprecated Just clear all references to deflater instead.
      */
@@ -440,8 +439,7 @@ public class Deflater {
     }
 
     /**
-     * Sets the dictionary which should be used in the deflate process. The dictionary should be a byte array
-     * containing
+     * Sets the dictionary which should be used in the deflate process. The dictionary should be a byte array containing
      * strings that are likely to occur in the data which should be compressed. The dictionary is not stored in the
      * compressed output, only a checksum. To decompress the output you need to supply the same dictionary again.
      * @param dict   the dictionary.
