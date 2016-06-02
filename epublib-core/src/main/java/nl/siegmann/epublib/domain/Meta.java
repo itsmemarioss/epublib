@@ -14,7 +14,7 @@ public class Meta extends DcmesElement {
     private String property;
     private String refines;
     private String scheme;
-    private Map<String, String> customProperties = new HashMap<String, String>();
+    private Map<String, String> customProperties = new HashMap<>();
 
     public Meta() {}
 

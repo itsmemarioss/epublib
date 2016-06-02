@@ -53,7 +53,7 @@ public class FilesetBookCreator {
      * @param rootDirectory
      * @return the newly created Book
      * @throws IOException
-     * @see nl.siegmann.epublib.domain.MediaTypeService
+     * @see nl.siegmann.epublib.service.MediatypeService
      */
     public static Book createBookFromDirectory(FileObject rootDirectory, String encoding) throws IOException {
         Book result = new Book();
@@ -86,7 +86,7 @@ public class FilesetBookCreator {
                     continue;
                 }
                 resources.add(resource);
-                if (MediatypeService.XHTML == resource.getMediaType()) {
+                if (MediatypeService.XHTML.equals(resource.getMediaTypeProperty())) {
                     TOCReference section = new TOCReference(file.getName().getBaseName(), resource);
                     sections.add(section);
                 }

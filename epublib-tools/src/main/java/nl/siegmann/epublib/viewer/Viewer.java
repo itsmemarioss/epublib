@@ -96,7 +96,7 @@ public class Viewer {
 
 
     private void gotoBook(Book book) {
-        mainWindow.setTitle(book.getTitle());
+        mainWindow.setTitle(book.getTitle().getValue());
         navigator.gotoBook(book, this);
     }
 

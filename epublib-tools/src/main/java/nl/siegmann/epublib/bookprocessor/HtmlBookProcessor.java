@@ -36,7 +36,7 @@ public abstract class HtmlBookProcessor implements BookProcessor {
     }
 
     private void cleanupResource(Resource resource, Book book) throws IOException {
-        if (resource.getMediaType() == MediatypeService.XHTML) {
+        if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
             byte[] cleanedHtml = processHtml(resource, book, Constants.CHARACTER_ENCODING);
             resource.setData(cleanedHtml);
             resource.setInputEncoding(Constants.CHARACTER_ENCODING);

@@ -4,10 +4,7 @@ import nl.siegmann.epublib.bookprocessor.CoverpageBookProcessor;
 import nl.siegmann.epublib.bookprocessor.DefaultBookProcessorPipeline;
 import nl.siegmann.epublib.bookprocessor.XslBookProcessor;
 import nl.siegmann.epublib.chm.ChmParser;
-import nl.siegmann.epublib.domain.Author;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Identifier;
-import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.BookProcessor;
 import nl.siegmann.epublib.epub.BookProcessorPipeline;
 import nl.siegmann.epublib.epub.EpubReader;
@@ -90,8 +87,8 @@ public class Fileset2Epub {
         }
 
         if (StringUtils.isNotBlank(title)) {
-            List<String> titles = new ArrayList<String>();
-            titles.add(title);
+            List<DcmesElement> titles = new ArrayList<>();
+            titles.add(new DcmesElement(title));
             book.getMetadata().setTitles(titles);
         }
 

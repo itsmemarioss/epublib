@@ -83,7 +83,7 @@ public class TableOfContentsPane extends JPanel implements NavigationEventListen
     }
 
     private DefaultMutableTreeNode createTree(Book book) {
-        TOCItem rootTOCItem = new TOCItem(new TOCReference(book.getTitle(), book.getCoverPage()));
+        TOCItem rootTOCItem = new TOCItem(new TOCReference(book.getTitle().getValue(), book.getCoverPage()));
         DefaultMutableTreeNode top = new DefaultMutableTreeNode(rootTOCItem);
         addToHref2TreeNode(book.getCoverPage(), top);
         createNodes(top, book);

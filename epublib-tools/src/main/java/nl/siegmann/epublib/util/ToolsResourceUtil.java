@@ -24,7 +24,7 @@ public class ToolsResourceUtil {
         if (resource == null) {
             return "";
         }
-        if (resource.getMediaType() != MediatypeService.XHTML) {
+        if (!resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
             return resource.getHref();
         }
         String title = findTitleFromXhtml(resource);

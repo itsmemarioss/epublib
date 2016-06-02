@@ -33,7 +33,7 @@ public class ChmParser {
             throws IOException, ParserConfigurationException,
             XPathExpressionException {
         Book result = new Book();
-        result.getMetadata().addTitle(findTitle(chmRootDir));
+        result.getMetadata().addTitle(new DcmesElement(findTitle(chmRootDir)));
         FileObject hhcFileObject = findHhcFileObject(chmRootDir);
         if (hhcFileObject == null) {
             throw new IllegalArgumentException("No index file found in directory " + chmRootDir +
@@ -105,13 +105,13 @@ public class ChmParser {
             if (file.getType() == FileType.FOLDER) {
                 continue;
             }
-            MediaType mediaType = MediatypeService.determineMediaType(file.getName().getBaseName());
+            MediaTypeProperty mediaType = MediatypeService.determineMediaType(file.getName().getBaseName());
             if (mediaType == null) {
                 continue;
             }
             String href = file.getName().toString().substring(rootDir.getName().toString().length() + 1);
             byte[] resourceData = IOUtils.toByteArray(file.getContent().getInputStream());
-            if (mediaType == MediatypeService.XHTML &&
+            if (mediaType.equals(MediatypeService.XHTML) &&
                     !nl.siegmann.epublib.Constants.CHARACTER_ENCODING.equalsIgnoreCase(inputEncoding)) {
                 resourceData = ResourceUtil.recode(inputEncoding, nl.siegmann.epublib.Constants.CHARACTER_ENCODING,
                         resourceData);

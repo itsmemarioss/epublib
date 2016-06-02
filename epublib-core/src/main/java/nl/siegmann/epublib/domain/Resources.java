@@ -292,7 +292,7 @@ public class Resources implements Serializable {
     public static Resource findFirstResourceByMediaType(Collection<Resource> resources, MediaTypeProperty
             mediaTypeProperty) {
         for (Resource resource : resources) {
-            if (resource.getMediaTypeProperty() == mediaTypeProperty) {
+            if (resource.getMediaTypeProperty().equals(mediaTypeProperty)) {
                 return resource;
             }
         }
@@ -310,7 +310,7 @@ public class Resources implements Serializable {
             return result;
         }
         for (Resource resource : getAll()) {
-            if (resource.getMediaTypeProperty() == mediaTypeProperty) {
+            if (resource.getMediaTypeProperty().equals(mediaTypeProperty)) {
                 result.add(resource);
             }
         }

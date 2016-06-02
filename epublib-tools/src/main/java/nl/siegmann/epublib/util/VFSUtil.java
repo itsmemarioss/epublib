@@ -1,6 +1,7 @@
 package nl.siegmann.epublib.util;
 
 import nl.siegmann.epublib.domain.MediaType;
+import nl.siegmann.epublib.domain.MediaTypeProperty;
 import nl.siegmann.epublib.domain.Resource;
 import nl.siegmann.epublib.service.MediatypeService;
 import org.apache.commons.io.IOUtils;
@@ -22,7 +23,7 @@ public class VFSUtil {
 
     public static Resource createResource(FileObject rootDir, FileObject file, String inputEncoding) throws
             IOException {
-        MediaType mediaType = MediatypeService.determineMediaType(file.getName().getBaseName());
+        MediaTypeProperty mediaType = MediatypeService.determineMediaType(file.getName().getBaseName());
         if (mediaType == null) {
             return null;
         }

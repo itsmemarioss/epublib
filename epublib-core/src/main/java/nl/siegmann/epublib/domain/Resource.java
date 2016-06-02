@@ -292,7 +292,6 @@ public class Resource implements Serializable {
      * <p>
      * Does all sorts of smart things (courtesy of apache commons io XMLStreamREader) to handle encodings, byte order
      * markers, etc.
-     * @param resource
      * @return
      * @throws IOException
      */

@@ -50,7 +50,7 @@ public class EpubWriterTest {
      */
     public void testWritingBookWithCoverWithNullId() throws FileNotFoundException, IOException {
         Book book = new Book();
-        book.getMetadata().addTitle("Epub test book 1");
+        book.getMetadata().addTitle(new DcmesElement("Epub test book 1"));
         book.getMetadata().addAuthor(new Author("Joe", "Tester"));
         InputStream is = this.getClass().getResourceAsStream("/book1/cover.png");
         book.setCoverImage(new Resource(is, "cover.png"));
@@ -65,8 +65,8 @@ public class EpubWriterTest {
     private Book createTestBook() throws IOException {
         Book book = new Book();
 
-        book.getMetadata().addTitle("Epublib test book 1");
-        book.getMetadata().addTitle("test2");
+        book.getMetadata().addTitle(new DcmesElement("Epublib test book 1"));
+        book.getMetadata().addTitle(new DcmesElement("test2"));
 
         book.getMetadata().addIdentifier(new Identifier(Identifier.Scheme.ISBN, "987654321"));
         book.getMetadata().addAuthor(new Author("Joe", "Tester"));

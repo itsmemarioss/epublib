@@ -59,7 +59,7 @@ public class CoverpageBookProcessor implements BookProcessor {
                 if (StringUtils.isBlank(coverImage.getHref())) {
                     coverImage.setHref(getCoverImageHref(coverImage, book));
                 }
-                String coverPageHtml = createCoverpageHtml(CollectionUtil.first(metadata.getTitles()),
+                String coverPageHtml = createCoverpageHtml(CollectionUtil.first(metadata.getTitles()).getValue(),
                         coverImage.getHref());
                 coverPage = new Resource(null, coverPageHtml.getBytes(), getCoverPageHref(book),
                         MediatypeService.XHTML);

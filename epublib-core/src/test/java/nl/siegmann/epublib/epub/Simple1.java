@@ -1,9 +1,6 @@
 package nl.siegmann.epublib.epub;
 
-import nl.siegmann.epublib.domain.Author;
-import nl.siegmann.epublib.domain.Book;
-import nl.siegmann.epublib.domain.Resource;
-import nl.siegmann.epublib.domain.TOCReference;
+import nl.siegmann.epublib.domain.*;
 
 import java.io.FileOutputStream;
 
@@ -14,7 +11,7 @@ public class Simple1 {
             Book book = new Book();
 
             // Set the title
-            book.getMetadata().addTitle("Epublib test book 1");
+            book.getMetadata().addTitle(new DcmesElement("Epublib test book 1"));
 
             // Add an Author
             book.getMetadata().addAuthor(new Author("Joe", "Tester"));

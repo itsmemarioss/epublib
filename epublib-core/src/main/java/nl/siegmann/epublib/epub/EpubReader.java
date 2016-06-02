@@ -177,7 +177,7 @@ public class EpubReader {
                 resource = new Resource(in, outPath + "/" + href, (int) zipEntry.getSize(), href);
             }
 
-            if (resource.getMediaTypeProperty() == MediatypeService.XHTML) {
+            if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
                 resource.setInputEncoding(defaultHtmlEncoding);
             }
             result.add(resource);
@@ -193,7 +193,7 @@ public class EpubReader {
                 continue;
             }
             Resource resource = ResourceUtil.createResource(zipEntry, in);
-            if (resource.getMediaTypeProperty() == MediatypeService.XHTML) {
+            if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
                 resource.setInputEncoding(defaultHtmlEncoding);
             }
             result.add(resource);

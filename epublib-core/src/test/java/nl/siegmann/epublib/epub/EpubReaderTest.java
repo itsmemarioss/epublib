@@ -70,6 +70,6 @@ public class EpubReaderTest {
         Assert.assertNotNull(readBook.getOpfResource());
         Assert.assertNotNull(readBook.getNcxResource());
         Assert.assertEquals(MediatypeService.NCX, readBook.getNcxResource()
-                                                          .getMediaType());
+                                                          .getMediaTypeProperty());
     }
 }

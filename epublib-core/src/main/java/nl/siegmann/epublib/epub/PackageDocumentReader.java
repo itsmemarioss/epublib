@@ -347,9 +347,9 @@ public class PackageDocumentReader extends PackageDocumentBase {
         Collections.sort(resourceHrefs, String.CASE_INSENSITIVE_ORDER);
         for (String resourceHref : resourceHrefs) {
             Resource resource = resources.getByHref(resourceHref);
-            if (resource.getMediaTypeProperty() == MediatypeService.NCX) {
+            if (resource.getMediaTypeProperty().equals(MediatypeService.NCX)) {
                 result.setTocResource(resource);
-            } else if (resource.getMediaTypeProperty() == MediatypeService.XHTML) {
+            } else if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
                 result.addSpineReference(new SpineReference(resource));
             }
         }
@@ -457,7 +457,7 @@ public class PackageDocumentReader extends PackageDocumentBase {
                 log.error("Cover resource " + coverHref + " not found");
                 continue;
             }
-            if (resource.getMediaTypeProperty() == MediatypeService.XHTML) {
+            if (resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
                 book.setCoverPage(resource);
             } else if (MediatypeService.isBitmapImage(resource.getMediaTypeProperty())) {
                 book.setCoverImage(resource);

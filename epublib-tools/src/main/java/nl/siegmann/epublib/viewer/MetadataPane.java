@@ -6,6 +6,7 @@ import nl.siegmann.epublib.browsersupport.Navigator;
 import nl.siegmann.epublib.domain.Book;
 import nl.siegmann.epublib.domain.Metadata;
 import nl.siegmann.epublib.domain.Resource;
+import nl.siegmann.epublib.util.CollectionUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,7 +79,7 @@ public class MetadataPane extends JPanel implements NavigationEventListener {
         addStrings(metadata.getIdentifiers(), "Identifier", result);
         addStrings(metadata.getTitles(), "Title", result);
         addStrings(metadata.getAuthors(), "Author", result);
-        result.add(new String[] {"Language", metadata.getLanguage()});
+        addStrings(metadata.getLanguages(), "Language", result);
         addStrings(metadata.getContributors(), "Contributor", result);
         addStrings(metadata.getDescriptions(), "Description", result);
         addStrings(metadata.getPublishers(), "Publisher", result);

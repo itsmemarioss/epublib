@@ -107,7 +107,7 @@ public class SearchIndex {
 
 
     public static String getSearchContent(Resource resource) {
-        if (resource.getMediaType() != MediatypeService.XHTML) {
+        if (!resource.getMediaTypeProperty().equals(MediatypeService.XHTML)) {
             return "";
         }
         String result = "";
