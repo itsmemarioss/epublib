@@ -1,5 +1,8 @@
+apply plugin: 'java'
 //apply plugin: 'com.github.johnrengelman.shadow'
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 description = 'epublib-core'
 
 // We'd really like to just have the shadow jar since we need the dependencies included.
