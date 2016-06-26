@@ -54,7 +54,8 @@ public class PackageDocumentReader extends PackageDocumentBase {
     }
 
     private static String readPackageId(Metadata metadata) {
-        String result = Identifier.getBookIdIdentifier(metadata.getIdentifiers()).getValue();
+        Identifier identifier = Identifier.getBookIdIdentifier(metadata.getIdentifiers());
+        String result = identifier == null ? null : identifier.getValue();
         for (Meta meta : metadata.getMetas()) {
             if (meta.getProperty().equals(DCAttributes.modified)) {
                 if (StringUtil.isNotBlank(meta.getValue())) {
@@ -62,7 +63,6 @@ public class PackageDocumentReader extends PackageDocumentBase {
                 }
             }
         }
-
         return result;
     }
 
