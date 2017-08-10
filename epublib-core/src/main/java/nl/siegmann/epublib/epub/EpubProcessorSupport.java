@@ -60,20 +60,30 @@ public class EpubProcessorSupport {
         documentBuilderFactory.setValidating(false);
     }
 
-    public static XmlSerializer createXmlSerializer(OutputStream out) throws UnsupportedEncodingException {
-        return createXmlSerializer(new OutputStreamWriter(out, Constants.CHARACTER_ENCODING));
-    }
 
-    public static XmlSerializer createXmlSerializer(Writer out) {
+    public static XmlSerializer createDefaultXmlSerializer() {
         XmlSerializer result = null;
         try {
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
             factory.setValidating(true);
             result = factory.newSerializer();
             result.setFeature("http://xmlpull.org/v1/doc/features.html#indent-output", true);
-            result.setOutput(out);
         } catch (Exception e) {
             log.error("When creating XmlSerializer: " + e.getClass().getName() + ": " + e.getMessage());
+        }
+        return result;
+    }
+
+    public static XmlSerializer createDefaultXmlSerializer(OutputStream out) throws UnsupportedEncodingException {
+        return createDefaultXmlSerializer(new OutputStreamWriter(out, Constants.CHARACTER_ENCODING));
+    }
+
+    public static XmlSerializer createDefaultXmlSerializer(Writer out) {
+        XmlSerializer result = null;
+        try {
+            createDefaultXmlSerializer().setOutput(out);
+        } catch (Exception e) {
+            log.error("When calling XmlSerializer.setOuput(): " + e.getClass().getName() + ": " + e.getMessage());
         }
         return result;
     }

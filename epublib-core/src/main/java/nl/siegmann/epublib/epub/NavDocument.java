@@ -16,6 +16,8 @@ import org.xmlpull.v1.XmlSerializer;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -158,11 +160,12 @@ public class NavDocument {
         return tocReference;
     }
 
-    public static Resource createNavResource(Book book) throws IOException {
+    public static Resource createNavResource(XmlSerializer serializer, Book book) throws IOException {
         ByteArrayOutputStream data = new ByteArrayOutputStream();
-        XmlSerializer out = EpubProcessorSupport.createXmlSerializer(data);
-        write(out, book);
-        out.flush();
+        Writer writer = new OutputStreamWriter(data, Constants.CHARACTER_ENCODING);
+        serializer.setOutput(writer);
+        write(serializer, book);
+        serializer.flush();
         return new Resource(NAV_ITEM_ID, data.toByteArray(), DEFAULT_NAV_HREF, MediatypeService.XHTML);
     }
 

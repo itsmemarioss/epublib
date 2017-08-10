@@ -1,5 +1,6 @@
 package nl.siegmann.epublib.epub;
 
+import nl.siegmann.epublib.Constants;
 import nl.siegmann.epublib.domain.*;
 import nl.siegmann.epublib.epub.impl.Epub2PackageDocumentWriter;
 import nl.siegmann.epublib.epub.impl.Epub3PackageDocumentWriter;
@@ -28,13 +29,19 @@ public class EpubWriter {
     static final String EMPTY_NAMESPACE_PREFIX = "";
 
     private BookProcessor bookProcessor = BookProcessor.IDENTITY_BOOKPROCESSOR;
+    private XmlSerializer xmlSerializer;
 
     public EpubWriter() {
-        this(BookProcessor.IDENTITY_BOOKPROCESSOR);
+        this(BookProcessor.IDENTITY_BOOKPROCESSOR, EpubProcessorSupport.createDefaultXmlSerializer());
     }
 
     public EpubWriter(BookProcessor bookProcessor) {
+        this(bookProcessor, EpubProcessorSupport.createDefaultXmlSerializer());
+    }
+
+    public EpubWriter(BookProcessor bookProcessor, XmlSerializer xmlSerializer) {
         this.bookProcessor = bookProcessor;
+        this.xmlSerializer = xmlSerializer;
     }
 
     public void write(Book book, OutputStream out) throws IOException {
@@ -73,7 +80,7 @@ public class EpubWriter {
     private void initTOCResource(Book book) {
         Resource tocResource;
         try {
-            tocResource = NCXDocument.createNCXResource(book);
+            tocResource = NCXDocument.createNCXResource(book, xmlSerializer);
             Resource currentTocResource = book.getSpine().getTocResource();
             if (currentTocResource != null) {
                 book.getResources().remove(currentTocResource.getHref());
@@ -92,7 +99,7 @@ public class EpubWriter {
             return;
         Resource navResource;
         try {
-            navResource = NavDocument.createNavResource(book);
+            navResource = NavDocument.createNavResource(xmlSerializer, book);
             book.getResources().add(navResource);
             book.getManifest().addReference(new ManifestItemReference(navResource, ManifestItemProperties.NAV));
         } catch (IOException e) {
@@ -129,8 +136,9 @@ public class EpubWriter {
 
     private void writePackageDocument(Book book, ZipOutputStream resultStream, Version version) throws IOException {
         resultStream.putNextEntry(new ZipEntry("OEBPS/content.opf"));
-        XmlSerializer xmlSerializer = EpubProcessorSupport.createXmlSerializer(resultStream);
+        xmlSerializer.setOutput(new OutputStreamWriter(resultStream, Constants.CHARACTER_ENCODING));
         PackageDocumentWriter writer;
+        System.out.println(">>>>>>>>> " + version);
         if (version == Version.V2) {
             writer = new Epub2PackageDocumentWriter(book, xmlSerializer);
         } else {
@@ -206,6 +214,10 @@ public class EpubWriter {
 
     String getNcxMediaType() {
         return "application/x-dtbncx+xml";
+    }
+
+    XmlSerializer getXmlSerializer() {
+        return xmlSerializer;
     }
 
     public BookProcessor getBookProcessor() {

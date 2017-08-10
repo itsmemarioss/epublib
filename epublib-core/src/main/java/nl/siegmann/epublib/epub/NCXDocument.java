@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import java.io.OutputStreamWriter;
 
 /**
  * Writes the ncx document as defined by namespace http://www.daisy.org/z3986/2005/ncx/
@@ -150,7 +151,7 @@ public class NCXDocument {
 
     public static void write(EpubWriter epubWriter, Book book, ZipOutputStream resultStream) throws IOException {
         resultStream.putNextEntry(new ZipEntry(book.getSpine().getTocResource().getHref()));
-        XmlSerializer out = EpubProcessorSupport.createXmlSerializer(resultStream);
+        XmlSerializer out = epubWriter.getXmlSerializer();
         write(out, book);
         out.flush();
     }
@@ -173,16 +174,23 @@ public class NCXDocument {
 
     public static Resource createNCXResource(Book book) throws IllegalArgumentException, IllegalStateException,
             IOException {
-        return createNCXResource(book.getMetadata().getIdentifiers(), book.getTitle(), book.getMetadata().getAuthors(),
-                book.getTableOfContents());
+        return createNCXResource(book.getMetadata().getIdentifiers(), book.getTitle(), book.getMetadata().getAuthors(), book.getTableOfContents(), null);
+    }
+
+    public static Resource createNCXResource(Book book, XmlSerializer xmlSerializer) throws IllegalArgumentException, IllegalStateException,
+      IOException {
+        return createNCXResource(book.getMetadata().getIdentifiers(), book.getTitle(), book.getMetadata().getAuthors(), book.getTableOfContents(), xmlSerializer);
     }
 
     public static Resource createNCXResource(List<Identifier> identifiers, DcmesElement title, List<Author> authors,
-                                             TableOfContents tableOfContents) throws IllegalArgumentException,
+                                             TableOfContents tableOfContents, XmlSerializer xmlSerializer) throws IllegalArgumentException,
             IllegalStateException, IOException {
         ByteArrayOutputStream data = new ByteArrayOutputStream();
-        XmlSerializer out = EpubProcessorSupport.createXmlSerializer(data);
-        write(out, identifiers, title, authors, tableOfContents);
+        if (xmlSerializer == null) {
+            xmlSerializer = EpubProcessorSupport.createDefaultXmlSerializer();
+        }
+        xmlSerializer.setOutput(new OutputStreamWriter(data, Constants.CHARACTER_ENCODING));
+        write(xmlSerializer, identifiers, title, authors, tableOfContents);
         Resource resource = new Resource(NCX_ITEM_ID, data.toByteArray(), DEFAULT_NCX_HREF, MediatypeService.NCX);
         return resource;
     }
