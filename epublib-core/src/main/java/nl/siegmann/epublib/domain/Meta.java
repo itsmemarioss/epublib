@@ -18,23 +18,9 @@ public class Meta extends DcmesElement {
 
     public Meta() {}
 
-    public Meta(Property property, String value) {
-        this.property = property.value();
+    public Meta(String property, String value) {
+        this.setProperty(property);
         this.setValue(value);
-    }
-
-    public enum Property {
-        DCTERMS_MODIFIED("dcterms:modified");
-
-        private final String value;
-
-        Property(String v) {
-            value = v;
-        }
-
-        public String value() {
-            return this.value;
-        }
     }
 
     public String getProperty() {

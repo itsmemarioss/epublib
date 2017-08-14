@@ -138,7 +138,6 @@ public class EpubWriter {
         resultStream.putNextEntry(new ZipEntry("OEBPS/content.opf"));
         xmlSerializer.setOutput(new OutputStreamWriter(resultStream, Constants.CHARACTER_ENCODING));
         PackageDocumentWriter writer;
-        System.out.println(">>>>>>>>> " + version);
         if (version == Version.V2) {
             writer = new Epub2PackageDocumentWriter(book, xmlSerializer);
         } else {

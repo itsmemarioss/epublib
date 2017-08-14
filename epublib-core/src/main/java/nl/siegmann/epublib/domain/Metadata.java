@@ -55,6 +55,21 @@ public class Metadata implements Serializable {
         this.metas = metas;
     }
 
+    public void addOrModifyMeta(String property, String value) {
+        int i = 0;
+        boolean propertyFound = false;
+        while (i < metas.size() && !propertyFound) {
+            if (metas.get(i).getProperty().equals(property)) {
+                metas.get(i).setValue(value);
+                propertyFound = true;
+            }
+            i++;
+        }
+        if (!propertyFound) {
+            metas.add(new Meta(property, value));
+        }
+    }
+
     public Meta addMeta(Meta meta) {
         this.metas.add(meta);
         return meta;

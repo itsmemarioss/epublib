@@ -33,7 +33,7 @@ public class PackageDocumentBase {
         String meta = "meta";
     }
 
-    protected interface DCAttributes {
+    public interface DCAttributes {
         String scheme = "scheme";
         String id = "id";
         String lang = "xml:lang";
