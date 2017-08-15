@@ -18,7 +18,11 @@ public class Epub3PackageDocumentWriter extends PackageDocumentWriter {
     private static final Logger logger = LoggerFactory.getLogger(Epub3PackageDocumentWriter.class);
 
     public Epub3PackageDocumentWriter(Book book, XmlSerializer serializer) {
-        super(book, serializer);
+        this(book, serializer, false);
+    }
+
+    public Epub3PackageDocumentWriter(Book book, XmlSerializer serializer, boolean iBooksSupport) {
+        super(book, serializer, iBooksSupport);
     }
 
     @Override

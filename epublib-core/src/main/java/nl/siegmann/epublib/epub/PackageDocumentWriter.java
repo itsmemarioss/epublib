@@ -14,10 +14,16 @@ import java.io.IOException;
 public abstract class PackageDocumentWriter extends PackageDocumentBase {
     protected Book book;
     protected XmlSerializer serializer;
+    protected boolean iBooksSupport;
 
     public PackageDocumentWriter(Book book, XmlSerializer serializer) {
+        this(book, serializer, false);
+    }
+
+    public PackageDocumentWriter(Book book, XmlSerializer serializer, boolean iBooksSupport) {
         this.book = book;
         this.serializer = serializer;
+        this.iBooksSupport = iBooksSupport;
     }
 
     public void write() throws IOException {
@@ -26,6 +32,9 @@ public abstract class PackageDocumentWriter extends PackageDocumentBase {
         serializer.startTag(NAMESPACE_OPF, OPFTags.packageTag);
         serializer.attribute(EpubWriter.EMPTY_NAMESPACE_PREFIX, OPFAttributes.version, getEpubVersion());
         serializer.attribute(EpubWriter.EMPTY_NAMESPACE_PREFIX, OPFAttributes.uniqueIdentifier, book.getUniqueId());
+        if (iBooksSupport) {
+            serializer.attribute(EpubWriter.EMPTY_NAMESPACE_PREFIX, OPFAttributes.prefix, IBOOKS_PREFIX);
+        }
         serializer.setPrefix(PREFIX_DUBLIN_CORE, NAMESPACE_DUBLIN_CORE);
 
         writeMetadata();

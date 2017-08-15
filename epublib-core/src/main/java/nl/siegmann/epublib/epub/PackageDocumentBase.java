@@ -13,6 +13,7 @@ public class PackageDocumentBase {
     public static final String PREFIX_DUBLIN_CORE = "dc";
     public static final String PREFIX_OPF = "opf";
     public static final String dateFormat = "yyyy-MM-dd";
+    public static final String IBOOKS_PREFIX = "ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/";
 
     protected interface DCTags {
         String title = "title";
@@ -45,6 +46,10 @@ public class PackageDocumentBase {
         String rel = "rel";
         String mediaType = "media-type";
         String modified = "dcterms:modified";
+    }
+
+    public interface IBooksAttributes {
+        String version = "ibooks:version";
     }
 
     protected interface OPFTags {
@@ -86,6 +91,7 @@ public class PackageDocumentBase {
         String mediaOverlay = "media-overlay";
         String pageProgressionDirection = "media-page-progression-direction";
         String lang = "xml:lang";
+        String prefix = "prefix";
     }
 
     protected interface OPFValues {

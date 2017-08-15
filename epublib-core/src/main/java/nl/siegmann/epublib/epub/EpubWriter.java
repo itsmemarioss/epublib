@@ -30,18 +30,20 @@ public class EpubWriter {
 
     private BookProcessor bookProcessor = BookProcessor.IDENTITY_BOOKPROCESSOR;
     private XmlSerializer xmlSerializer;
+    private boolean iBooksSupport;
 
     public EpubWriter() {
-        this(BookProcessor.IDENTITY_BOOKPROCESSOR, EpubProcessorSupport.createDefaultXmlSerializer());
+        this(BookProcessor.IDENTITY_BOOKPROCESSOR, EpubProcessorSupport.createDefaultXmlSerializer(), false);
     }
 
     public EpubWriter(BookProcessor bookProcessor) {
-        this(bookProcessor, EpubProcessorSupport.createDefaultXmlSerializer());
+        this(bookProcessor, EpubProcessorSupport.createDefaultXmlSerializer(), false);
     }
 
-    public EpubWriter(BookProcessor bookProcessor, XmlSerializer xmlSerializer) {
+    public EpubWriter(BookProcessor bookProcessor, XmlSerializer xmlSerializer, Boolean iBooksSupport) {
         this.bookProcessor = bookProcessor;
         this.xmlSerializer = xmlSerializer;
+        this.iBooksSupport = iBooksSupport;
     }
 
     public void write(Book book, OutputStream out) throws IOException {
@@ -141,7 +143,7 @@ public class EpubWriter {
         if (version == Version.V2) {
             writer = new Epub2PackageDocumentWriter(book, xmlSerializer);
         } else {
-            writer = new Epub3PackageDocumentWriter(book, xmlSerializer);
+            writer = new Epub3PackageDocumentWriter(book, xmlSerializer, iBooksSupport);
         }
 
         writer.write();
