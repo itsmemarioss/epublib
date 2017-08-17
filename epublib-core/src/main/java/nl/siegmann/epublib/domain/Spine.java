@@ -104,6 +104,26 @@ public class Spine implements Serializable {
     }
 
     /**
+     * Adds the given spineReference to the spine references and returns it.
+     * @param spineReference
+     * @param resourceId the id of the resource preceding the new resource to be inserted.
+     * @return the given spineReference or null if the resourceId didn't exist.
+     */
+    public SpineReference addSpineReference(SpineReference spineReference, String resourceId) {
+        if (spineReferences == null) {
+            this.spineReferences = new ArrayList<SpineReference>();
+        }
+        int idx = getResourceIndexWithId(resourceId);
+        if (idx > -1) {
+            spineReferences.add(idx+1, spineReference);
+            return spineReference;
+        }
+        else {
+            return null;
+        }
+    }
+
+    /**
      * Adds the given resource to the spine references and returns it.
      * @return the given spineReference
      */
@@ -152,7 +172,7 @@ public class Spine implements Serializable {
 
     /**
      * The first position within the spine of a resource with the given href.
-     * @return something &lt; 0 if not found.
+     * @return something &lt; -1 if not found.
      */
     public int getResourceIndex(String resourceHref) {
         int result = -1;
@@ -161,6 +181,21 @@ public class Spine implements Serializable {
         }
         for (int i = 0; i < spineReferences.size(); i++) {
             if (resourceHref.equals(spineReferences.get(i).getResource().getHref())) {
+                result = i;
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * The first position within the spine of a resource with the given id.
+     * @return something &lt; -1 if not found.
+     */
+    public int getResourceIndexWithId(String resourceId) {
+        int result = -1;
+        for (int i = 0; i < spineReferences.size(); i++) {
+            if (resourceId.equals(spineReferences.get(i).getResource().getId())) {
                 result = i;
                 break;
             }
