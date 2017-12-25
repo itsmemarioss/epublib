@@ -21,7 +21,8 @@ public class Resources implements Serializable {
     private static final String ITEM_PREFIX = "item_";
     private int lastId = 1;
 
-    private Map<String, Resource> resources = new HashMap<String, Resource>();
+    private Map<String, Resource> resourcesByHref = new HashMap<String, Resource>();
+    private Map<String, Resource> resourcesById = new HashMap<String, Resource>();
 
     /**
      * Adds a resource to the resources.
@@ -33,7 +34,8 @@ public class Resources implements Serializable {
     public Resource add(Resource resource) {
         fixResourceHref(resource);
         fixResourceId(resource);
-        this.resources.put(resource.getHref(), resource);
+        this.resourcesByHref.put(resource.getHref(), resource);
+        this.resourcesById.put(resource.getId(), resource);
         return resource;
     }
 
@@ -89,7 +91,7 @@ public class Resources implements Serializable {
     private String createUniqueResourceId(Resource resource) {
         int counter = lastId;
         if (counter == Integer.MAX_VALUE) {
-            if (resources.size() == Integer.MAX_VALUE) {
+            if (resourcesByHref.size() == Integer.MAX_VALUE) {
                 throw new IllegalArgumentException(
                         "Resources contains " + Integer.MAX_VALUE + " elements: no new elements can be added");
             } else {
@@ -111,15 +113,7 @@ public class Resources implements Serializable {
      * @return Whether the map of resources already contains a resource with the given id.
      */
     public boolean containsId(String id) {
-        if (StringUtil.isBlank(id)) {
-            return false;
-        }
-        for (Resource resource : resources.values()) {
-            if (id.equals(resource.getId())) {
-                return true;
-            }
-        }
-        return false;
+        return resourcesById.containsKey(id);
     }
 
     /**
@@ -128,15 +122,7 @@ public class Resources implements Serializable {
      * @return null if not found
      */
     public Resource getById(String id) {
-        if (StringUtil.isBlank(id)) {
-            return null;
-        }
-        for (Resource resource : resources.values()) {
-            if (id.equals(resource.getId())) {
-                return resource;
-            }
-        }
-        return null;
+        return resourcesById.get(id);
     }
 
     /**
@@ -145,12 +131,16 @@ public class Resources implements Serializable {
      * @return the removed resource, null if not found
      */
     public Resource remove(String href) {
-        return resources.remove(href);
+        Resource resource = resourcesByHref.remove(href);
+        if (resource != null) {
+            resourcesById.remove(resource.getId());
+        }
+        return resource;
     }
 
     private void fixResourceHref(Resource resource) {
         if (StringUtil.isNotBlank(resource.getHref())
-                && !resources.containsKey(resource.getHref())) {
+                && !resourcesByHref.containsKey(resource.getHref())) {
             return;
         }
         if (StringUtil.isBlank(resource.getHref())) {
@@ -159,7 +149,7 @@ public class Resources implements Serializable {
             }
             int i = 1;
             String href = createHref(resource.getMediaTypeProperty(), i);
-            while (resources.containsKey(href)) {
+            while (resourcesByHref.containsKey(href)) {
                 href = createHref(resource.getMediaTypeProperty(), (++i));
             }
             resource.setHref(href);
@@ -176,7 +166,7 @@ public class Resources implements Serializable {
 
 
     public boolean isEmpty() {
-        return resources.isEmpty();
+        return resourcesByHref.isEmpty();
     }
 
     /**
@@ -184,7 +174,7 @@ public class Resources implements Serializable {
      * @return The number of resources
      */
     public int size() {
-        return resources.size();
+        return resourcesByHref.size();
     }
 
     /**
@@ -192,11 +182,11 @@ public class Resources implements Serializable {
      * @return The resources that make up this book.
      */
     public Map<String, Resource> getResourceMap() {
-        return resources;
+        return resourcesByHref;
     }
 
     public Collection<Resource> getAll() {
-        return resources.values();
+        return resourcesByHref.values();
     }
 
 
@@ -209,7 +199,7 @@ public class Resources implements Serializable {
         if (StringUtil.isBlank(href)) {
             return false;
         }
-        return resources.containsKey(StringUtil.substringBefore(href, Constants.FRAGMENT_SEPARATOR_CHAR));
+        return resourcesByHref.containsKey(StringUtil.substringBefore(href, Constants.FRAGMENT_SEPARATOR_CHAR));
     }
 
     /**
@@ -217,7 +207,7 @@ public class Resources implements Serializable {
      * @param resources
      */
     public void set(Collection<Resource> resources) {
-        this.resources.clear();
+        this.resourcesByHref.clear();
         addAll(resources);
     }
 
@@ -227,8 +217,7 @@ public class Resources implements Serializable {
      */
     public void addAll(Collection<Resource> resources) {
         for (Resource resource : resources) {
-            fixResourceHref(resource);
-            this.resources.put(resource.getHref(), resource);
+            add(resource);
         }
     }
 
@@ -237,7 +226,7 @@ public class Resources implements Serializable {
      * @param resources A map with as keys the resources href and as values the Resources
      */
     public void set(Map<String, Resource> resources) {
-        this.resources = new HashMap<String, Resource>(resources);
+        this.resourcesByHref = new HashMap<String, Resource>(resources);
     }
 
 
@@ -267,7 +256,7 @@ public class Resources implements Serializable {
             return null;
         }
         href = StringUtil.substringBefore(href, Constants.FRAGMENT_SEPARATOR_CHAR);
-        Resource result = resources.get(href);
+        Resource result = resourcesByHref.get(href);
         return result;
     }
 
@@ -279,7 +268,7 @@ public class Resources implements Serializable {
      * @return
      */
     public Resource findFirstResourceByMediaType(MediaTypeProperty mediaTypeProperty) {
-        return findFirstResourceByMediaType(resources.values(), mediaTypeProperty);
+        return findFirstResourceByMediaType(resourcesByHref.values(), mediaTypeProperty);
     }
 
     /**
@@ -347,6 +336,6 @@ public class Resources implements Serializable {
      * @return all resource hrefs
      */
     public Collection<String> getAllHrefs() {
-        return resources.keySet();
+        return resourcesByHref.keySet();
     }
 }

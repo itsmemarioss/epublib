@@ -49,3 +49,4 @@ bower_components/
 # Repo-specific stuff
 /foo.zip
 /epublib-core/foo.zip
+classes/
