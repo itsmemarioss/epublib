@@ -41,6 +41,7 @@ public class Epub3PackageDocumentMetadataWriter extends PackageDocumentMetadataW
         }
 
         // write other properties
+        writeCover(book.getCoverImage());
         writeMeta(book.getMetadata().getMetas());
 
         serializer.endTag(NAMESPACE_OPF, OPFTags.metadata);
@@ -139,6 +140,17 @@ public class Epub3PackageDocumentMetadataWriter extends PackageDocumentMetadataW
             }
             serializer.text(meta.getValue());
             serializer.endTag(NAMESPACE_OPF, DCTags.meta);
+        }
+    }
+
+    private void writeCover(Resource coverImage) throws IOException {
+        if (coverImage != null) {
+            serializer.startTag(NAMESPACE_OPF, OPFTags.meta);
+            serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.name, OPFValues.meta_cover);
+            if (StringUtil.isNotBlank(coverImage.getId())) {
+                serializer.attribute(EMPTY_NAMESPACE_PREFIX, OPFAttributes.content, coverImage.getId());
+            }
+            serializer.endTag(NAMESPACE_OPF, OPFTags.meta);
         }
     }
 }
