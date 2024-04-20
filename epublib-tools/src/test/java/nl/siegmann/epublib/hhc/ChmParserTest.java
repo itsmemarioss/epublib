@@ -35,7 +35,7 @@ public class ChmParserTest extends TestCase {
             assertEquals(45, chmBook.getResources().size());
             assertEquals(18, chmBook.getSpine().size());
             assertEquals(19, chmBook.getTableOfContents().size());
-            assertEquals("chm-example", chmBook.getMetadata().getTitles().get(0));
+            assertEquals("chm-example", chmBook.getMetadata().getTitles().get(0).getValue());
         } catch (Exception e) {
             e.printStackTrace();
             assertTrue(false);

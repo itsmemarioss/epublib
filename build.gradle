@@ -10,7 +10,7 @@ buildscript {
 
 allprojects  {
     apply plugin: 'idea'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'java'
 
     group = 'nl.siegmann.epublib'
@@ -30,7 +30,7 @@ allprojects  {
 
 subprojects {
     task packageSources(type: Jar) {
-        classifier = 'sources'
+        archiveClassifier = 'sources'
         from sourceSets.main.allSource
     }
 
