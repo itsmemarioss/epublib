@@ -1,6 +1,5 @@
 package nl.siegmann.epublib.domain;
 
-import javafx.util.Pair;
 import nl.siegmann.epublib.service.MediatypeService;
 import nl.siegmann.epublib.util.StringUtil;
 
@@ -34,7 +33,6 @@ public class Metadata implements Serializable {
     private List<Link> links = new ArrayList<>();
     private Map<String, DcmesElement> dcmesElementMap = new HashMap<>();
     private Resource coverImage;
-    private List<Pair<String, HashMap<String, String>>> extraTags = new ArrayList<>();
 
     public Metadata() {
         identifiers.add(new Identifier());
