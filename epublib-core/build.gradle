@@ -1,8 +1,3 @@
-apply plugin: 'java'
-//apply plugin: 'com.github.johnrengelman.shadow'
-
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
 description = 'epublib-core'
 
 dependencies {
