@@ -1,23 +1,13 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.2'
-    }
-}
-
 allprojects  {
     apply plugin: 'idea'
     apply plugin: 'maven-publish'
-    apply plugin: 'java'
+    apply plugin: 'java-library'
 
     group = 'nl.siegmann.epublib'
-    version = '3.1'
+    version = '4.0.0'
 
     repositories {
-        jcenter()
+        mavenCentral()
     }
 
     idea {
@@ -26,10 +16,17 @@ allprojects  {
             downloadJavadoc = true
         }
     }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
 }
 
+
 subprojects {
-    task packageSources(type: Jar) {
+    tasks.register('packageSources', Jar) {
         archiveClassifier = 'sources'
         from sourceSets.main.allSource
     }
