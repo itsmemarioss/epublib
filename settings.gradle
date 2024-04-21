@@ -1,5 +1,0 @@
-rootProject.name = 'epublib-parent'
-
-include ':epublib-core'
-
-project(':epublib-core').projectDir = "$rootDir/epublib-core" as File
